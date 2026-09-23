@@ -1,0 +1,2177 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GODDY RECRUIT - Quản Lý Hóa Đơn, Công Nợ & Tuyển Dụng</title>
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --sidebar-bg: #0f172a;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { background-color: #f8fafc; color: var(--text-main); display: flex; min-height: 100vh; }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 270px;
+      background: var(--sidebar-bg);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
+    }
+    .sidebar-header {
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .sidebar-logo-icon {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; color: #fff;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    }
+    .sidebar-title { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; }
+    .sidebar-subtitle { font-size: 11px; color: #94a3b8; text-transform: uppercase; font-weight: 600; }
+    .sidebar-menu { list-style: none; padding: 20px 14px; flex: 1; margin: 0; }
+    .sidebar-item {
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 14px;
+      color: #94a3b8; font-weight: 500; font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .sidebar-item:hover { background: rgba(255,255,255,0.06); color: #fff; transform: translateX(3px); }
+    .sidebar-item.active { background: var(--primary); color: #fff; font-weight: 600; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35); }
+    .sidebar-footer { padding: 18px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 12px; color: #64748b; }
+
+    /* MAIN CONTENT */
+    .main-wrapper { flex: 1; display: flex; flex-direction: column; overflow-x: hidden; }
+    .top-navbar {
+      height: 70px; background: #fff; border-bottom: 1px solid var(--border-color);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+    }
+    .page-title { font-size: 20px; font-weight: 700; margin: 0; letter-spacing: -0.3px; }
+    .user-pill {
+      display: flex; align-items: center; gap: 10px;
+      background: #f1f5f9; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600;
+    }
+
+    .content-container { padding: 28px 32px; flex: 1; }
+
+    /* METRIC CARDS */
+    .metric-card {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .metric-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+    .metric-title { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
+    .metric-value { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+    .metric-icon-box {
+      width: 50px; height: 50px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; font-size: 22px;
+    }
+
+    /* TABLES & BOXES */
+    .table-box {
+      background: #fff; border: 1px solid var(--border-color);
+      border-radius: 16px; padding: 24px; margin-top: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+    .box-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .box-title { font-size: 17px; font-weight: 700; margin: 0; }
+    .table { margin: 0; vertical-align: middle; }
+    .table thead th {
+      background: #f8fafc; font-size: 12px; text-transform: uppercase; color: var(--text-muted);
+      font-weight: 700; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color); padding: 12px 16px;
+    }
+    .table tbody td { padding: 14px 16px; font-size: 14px; border-bottom: 1px solid var(--border-color); }
+
+    /* BADGES */
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    }
+    .badge-paid { background: #dcfce7; color: #15803d; }
+    .badge-sent { background: #e0e7ff; color: #4338ca; }
+    .badge-partial { background: #fef3c7; color: #b45309; }
+    .badge-overdue { background: #fee2e2; color: #b91c1c; }
+    .badge-warranty { background: #ede9fe; color: #6d28d9; }
+    .badge-passed { background: #dcfce7; color: #15803d; }
+
+    /* MODAL STYLES */
+    .modal-header { background: #f8fafc; border-bottom: 1px solid var(--border-color); }
+    .modal-title { font-weight: 700; font-size: 17px; }
+
+    /* INVOICE PRINT TEMPLATE */
+    .invoice-print-sheet {
+      background: #fff; padding: 36px; border: 1px solid var(--border-color); border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+    }
+    @media print {
+      body * { visibility: hidden; }
+      #modalInvoiceDetail, #modalInvoiceDetail * { visibility: visible; }
+      #modalInvoiceDetail { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; }
+      .modal-footer, .btn-close { display: none !important; }
+    }
+    /* CLIENT PORTAL & ROLE SWITCHER STYLES */
+    .client-hero-card {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 25px rgba(67, 56, 202, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .client-hero-card::after {
+      content: "";
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .client-subnav-btn {
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 13px;
+      color: #475569;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .client-subnav-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .client-subnav-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+    .bank-card {
+      background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+      border: 1px dashed #94a3b8;
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .role-dropdown-btn {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .role-dropdown-btn:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo-icon" id="sidebarLogoIcon"><i class="fa-solid fa-chart-pie"></i></div>
+      <div>
+        <div class="sidebar-title" id="sidebarMainTitle">GODDY RECRUIT</div>
+        <div class="sidebar-subtitle" id="sidebarSubTitle">Quản Lý Công Nợ B2B</div>
+      </div>
+    </div>
+
+    <!-- Menu Nội bộ (Admin, Kế toán, Recruiter) -->
+    <ul class="sidebar-menu" id="sidebarMenuInternal">
+      <li class="sidebar-item active" onclick="switchTab('dashboard')">
+        <i class="fa-solid fa-gauge-high"></i> Dashboard Thống Kê
+      </li>
+      <li class="sidebar-item" onclick="switchTab('clients')">
+        <i class="fa-solid fa-building-user"></i> Khách Hàng Doanh Nghiệp
+      </li>
+      <li class="sidebar-item" onclick="switchTab('recruitment')">
+        <i class="fa-solid fa-briefcase"></i> Tuyển Dụng & Deal Onboard
+      </li>
+      <li class="sidebar-item" onclick="switchTab('invoices')">
+        <i class="fa-solid fa-file-invoice-dollar"></i> Hóa Đơn & Invoicing
+      </li>
+      <li class="sidebar-item" onclick="switchTab('debt')">
+        <i class="fa-solid fa-scale-unbalanced"></i> Công Nợ & Tuổi Nợ (Aging)
+      </li>
+      <li class="sidebar-item" onclick="switchTab('audit')">
+        <i class="fa-solid fa-clock-rotate-left"></i> Nhật Ký Audit Log
+      </li>
+    </ul>
+
+    <!-- Menu Cổng Khách Hàng (Client Portal) -->
+    <ul class="sidebar-menu" id="sidebarMenuClient" style="display: none;">
+      <li class="sidebar-item active" onclick="switchClientSubTab('invoices')">
+        <i class="fa-solid fa-file-invoice-dollar"></i> Hóa Đơn & Thanh Toán
+      </li>
+      <li class="sidebar-item" onclick="switchClientSubTab('jobs')">
+        <i class="fa-solid fa-briefcase"></i> Vị Trí Tuyển Dụng
+      </li>
+      <li class="sidebar-item" onclick="switchClientSubTab('placements')">
+        <i class="fa-solid fa-user-check"></i> Ứng Viên & Bảo Hành (60d)
+      </li>
+      <li class="sidebar-item" onclick="switchClientSubTab('profile')">
+        <i class="fa-solid fa-id-card"></i> Hồ Sơ Doanh Nghiệp
+      </li>
+    </ul>
+
+    <div class="sidebar-footer" id="sidebarFooter">
+      <div id="sidebarFooterInternal">
+        <div><strong>Đồ án QLDA - Nhóm 10</strong></div>
+        <div class="text-muted" style="font-size: 11px;">Phiên bản 1.0.0 (SQLite Enterprise)</div>
+      </div>
+      <div id="sidebarFooterClient" style="display: none;">
+        <button class="btn btn-sm btn-outline-light w-100 mb-2" onclick="switchUserRole('admin')">
+          <i class="fa-solid fa-arrow-left me-1"></i> Về quyền Quản trị
+        </button>
+        <div class="text-muted text-center" style="font-size: 11px;">Chế độ Cổng Khách Hàng B2B</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+    <header class="top-navbar">
+      <h1 class="page-title" id="pageHeaderTitle">Dashboard Dữ Liệu Tuyển Dụng & Tài Chính</h1>
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-outline-secondary" onclick="reloadCurrentTab()" title="Làm mới dữ liệu">
+          <i class="fa-solid fa-rotate me-1"></i> Làm mới
+        </button>
+
+        <!-- Dropdown Chuyển Đổi Quyền / Tài Khoản -->
+        <div class="dropdown">
+          <button class="role-dropdown-btn dropdown-toggle" type="button" id="roleDropdownBtn" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="badge bg-danger rounded-pill px-2 py-1" id="roleBadge">Admin</span>
+            <span id="navRoleTitle">Huỳnh Nguyễn Vĩnh Phúc</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 py-2" style="min-width: 320px; border-radius: 14px;">
+            <li class="dropdown-header text-uppercase fw-bold text-muted small"><i class="fa-solid fa-users me-1"></i> Tài Khoản Nội Bộ</li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:void(0)" onclick="switchUserRole('admin')">
+                <span class="badge bg-danger rounded-pill">Admin</span>
+                <div>
+                  <div class="fw-bold small">Huỳnh Nguyễn Vĩnh Phúc</div>
+                  <div class="text-muted" style="font-size: 11px;">Toàn quyền hệ thống & Giám sát</div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:void(0)" onclick="switchUserRole('accountant')">
+                <span class="badge bg-success rounded-pill">Kế toán</span>
+                <div>
+                  <div class="fw-bold small">Phạm Sơn (Kế toán trưởng)</div>
+                  <div class="text-muted" style="font-size: 11px;">Hóa đơn, Công nợ, Ghi nhận thu tiền</div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:void(0)" onclick="switchUserRole('recruiter')">
+                <span class="badge bg-warning text-dark rounded-pill">Recruiter</span>
+                <div>
+                  <div class="fw-bold small">Nguyễn Văn Minh (Senior)</div>
+                  <div class="text-muted" style="font-size: 11px;">Quản lý ứng viên & Deal onboard</div>
+                </div>
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li class="dropdown-header text-uppercase fw-bold text-primary small"><i class="fa-solid fa-building me-1"></i> Cổng Khách Hàng (Client Portal)</li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:void(0)" onclick="switchUserRole('client', 1)">
+                <span class="badge bg-primary rounded-pill">Khách hàng</span>
+                <div>
+                  <div class="fw-bold small">FPT Software (Trần Thu Hà)</div>
+                  <div class="text-muted" style="font-size: 11px;">Tài khoản: fpt_client (Net 30)</div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:void(0)" onclick="switchUserRole('client', 2)">
+                <span class="badge bg-primary rounded-pill">Khách hàng</span>
+                <div>
+                  <div class="fw-bold small">VNG Corporation (Nguyễn Hoàng Long)</div>
+                  <div class="text-muted" style="font-size: 11px;">Tài khoản: vng_client (Net 30)</div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:void(0)" onclick="switchUserRole('client', 3)">
+                <span class="badge bg-primary rounded-pill">Khách hàng</span>
+                <div>
+                  <div class="fw-bold small">Shopee Việt Nam (Lê Thùy Dương)</div>
+                  <div class="text-muted" style="font-size: 11px;">Tài khoản: shopee_client (Net 45)</div>
+                </div>
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item text-center text-primary fw-bold small py-2" href="javascript:void(0)" onclick="openLoginModal()">
+                <i class="fa-solid fa-right-to-bracket me-1"></i> Đăng nhập bằng tài khoản khác...
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main class="content-container">
+
+      <!-- ================= SECTION 1: DASHBOARD ================= -->
+      <div id="section-dashboard">
+        <!-- 4 Metric Cards -->
+        <div class="row g-4">
+          <div class="col-md-3">
+            <div class="metric-card">
+              <div>
+                <div class="metric-title">Doanh Thu Đã Thu</div>
+                <div class="metric-value text-success" id="valTotalRevenue">0 đ</div>
+              </div>
+              <div class="metric-icon-box bg-success-subtle text-success">
+                <i class="fa-solid fa-sack-dollar"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="metric-card">
+              <div>
+                <div class="metric-title">Tổng Nợ Cần Thu (AR)</div>
+                <div class="metric-value text-primary" id="valTotalAR">0 đ</div>
+              </div>
+              <div class="metric-icon-box bg-primary-subtle text-primary">
+                <i class="fa-solid fa-receipt"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="metric-card">
+              <div>
+                <div class="metric-title">Nợ Quá Hạn Cần Đòi</div>
+                <div class="metric-value text-danger" id="valOverdueAR">0 đ</div>
+              </div>
+              <div class="metric-icon-box bg-danger-subtle text-danger">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="metric-card">
+              <div>
+                <div class="metric-title">Deal Thành Công</div>
+                <div class="metric-value text-warning" id="valPlacementCount">0 Deals</div>
+              </div>
+              <div class="metric-icon-box bg-warning-subtle text-warning">
+                <i class="fa-solid fa-handshake"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI Ratios -->
+        <div class="row g-4 mt-2">
+          <div class="col-md-6">
+            <div class="p-3 bg-white border rounded-3 d-flex align-items-center justify-content-between">
+              <div>
+                <span class="text-muted small fw-bold text-uppercase">Tỷ Lệ Thu Hồi Công Nợ</span>
+                <h4 class="mb-0 text-success fw-bold" id="valCollectionRate">0%</h4>
+              </div>
+              <i class="fa-solid fa-chart-line text-success fs-2 opacity-75"></i>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-white border rounded-3 d-flex align-items-center justify-content-between">
+              <div>
+                <span class="text-muted small fw-bold text-uppercase">Tỷ Lệ Nợ Quá Hạn / Tổng Nợ</span>
+                <h4 class="mb-0 text-danger fw-bold" id="valBadDebtRate">0%</h4>
+              </div>
+              <i class="fa-solid fa-chart-pie text-danger fs-2 opacity-75"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 Charts -->
+        <div class="row g-4 mt-2">
+          <div class="col-lg-8">
+            <div class="table-box mt-0">
+              <div class="box-header">
+                <h3 class="box-title"><i class="fa-solid fa-chart-area text-primary me-2"></i>Doanh Thu Tuyển Dụng Theo Tháng (Triệu VNĐ)</h3>
+              </div>
+              <canvas id="revenueChart" height="110"></canvas>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="table-box mt-0">
+              <div class="box-header">
+                <h3 class="box-title"><i class="fa-solid fa-chart-pie text-success me-2"></i>Cơ Cấu Khách Hàng Theo Ngành</h3>
+              </div>
+              <canvas id="industryChart" height="230"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top 5 Debtor Clients -->
+        <div class="table-box">
+          <div class="box-header">
+            <h3 class="box-title"><i class="fa-solid fa-fire text-danger me-2"></i>Top 5 Doanh Nghiệp Có Công Nợ Cần Thu Hồi Lớn Nhất</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Tên Doanh Nghiệp</th>
+                  <th>Mã Số Thuế</th>
+                  <th>Số Hóa Đơn Nợ</th>
+                  <th>Tổng Nợ Còn Lại</th>
+                  <th>Thao Tác</th>
+                </tr>
+              </thead>
+              <tbody id="topDebtorsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SECTION 2: CLIENTS ================= -->
+      <div id="section-clients" style="display: none;">
+        <div class="table-box mt-0">
+          <div class="box-header">
+            <div>
+              <h3 class="box-title"><i class="fa-solid fa-building text-primary me-2"></i>Danh Sách Khách Hàng Doanh Nghiệp (B2B)</h3>
+              <div class="text-muted small mt-1">Quản lý thông tin công ty, mã số thuế và điều khoản thanh toán Net Days</div>
+            </div>
+            <div class="d-flex gap-2">
+              <input type="text" class="form-control form-control-sm" id="clientSearchInput" placeholder="Tìm theo tên / MST..." oninput="filterClientsTable()" style="width: 220px;">
+              <button class="btn btn-sm btn-outline-success" onclick="exportClientsCSV()"><i class="fa-solid fa-file-csv me-1"></i>Xuất CSV</button>
+              <button class="btn btn-sm btn-primary" onclick="openModalAddClient()"><i class="fa-solid fa-plus me-1"></i>Thêm Khách Hàng</button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Doanh Nghiệp / Địa Chỉ</th>
+                  <th>Mã Số Thuế</th>
+                  <th>Người Liên Hệ</th>
+                  <th>Email & SĐT</th>
+                  <th>Hạn Thanh Toán</th>
+                  <th>Trạng Thái</th>
+                </tr>
+              </thead>
+              <tbody id="clientsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SECTION 3: RECRUITMENT & PLACEMENTS ================= -->
+      <div id="section-recruitment" style="display: none;">
+        <div class="table-box mt-0">
+          <div class="box-header">
+            <div>
+              <h3 class="box-title"><i class="fa-solid fa-handshake text-success me-2"></i>Deal Tuyển Dụng Onboard & Thời Hạn Bảo Hành</h3>
+              <div class="text-muted small mt-1">Theo dõi ứng viên đi làm, phí dịch vụ hoa hồng và thời hạn bảo hành 60 ngày</div>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-primary" onclick="openModalAddPlacement()"><i class="fa-solid fa-plus me-1"></i>Chốt Deal Tuyển Dụng</button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Ứng Viên</th>
+                  <th>Vị Trí Tuyển</th>
+                  <th>Khách Hàng (Công Ty)</th>
+                  <th>Lương Chính Thức</th>
+                  <th>Phí Dịch Vụ</th>
+                  <th>Ngày Hết Bảo Hành</th>
+                  <th>Trạng Thái</th>
+                  <th>Hóa Đơn</th>
+                </tr>
+              </thead>
+              <tbody id="placementsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SECTION 4: INVOICES ================= -->
+      <div id="section-invoices" style="display: none;">
+        <div class="table-box mt-0">
+          <div class="box-header">
+            <div>
+              <h3 class="box-title"><i class="fa-solid fa-file-invoice-dollar text-primary me-2"></i>Danh Sách Hóa Đơn Dịch Vụ Tuyển Dụng</h3>
+              <div class="text-muted small mt-1">Quản lý hóa đơn VAT phát hành từ deal tuyển dụng và theo dõi thanh toán</div>
+            </div>
+            <div class="d-flex gap-2">
+              <select class="form-select form-select-sm" id="invoiceFilterStatus" onchange="loadInvoices()" style="width: 170px;">
+                <option value="All">Tất cả trạng thái</option>
+                <option value="Sent">Chờ thanh toán (Sent)</option>
+                <option value="Partial">Trả một phần (Partial)</option>
+                <option value="Paid">Đã tất toán (Paid)</option>
+                <option value="Overdue">Quá hạn (Overdue)</option>
+              </select>
+              <button class="btn btn-sm btn-outline-success" onclick="exportInvoicesCSV()"><i class="fa-solid fa-file-csv me-1"></i>Xuất CSV</button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Mã Hóa Đơn</th>
+                  <th>Khách Hàng</th>
+                  <th>Tổng Tiền</th>
+                  <th>Đã Thanh Toán</th>
+                  <th>Còn Nợ</th>
+                  <th>Hạn Trả</th>
+                  <th>Trạng Thái</th>
+                  <th>Thao Tác</th>
+                </tr>
+              </thead>
+              <tbody id="invoicesTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SECTION 5: DEBT & AGING REPORT ================= -->
+      <div id="section-debt" style="display: none;">
+        <!-- 3 Aging Metric Cards -->
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="metric-card border-danger">
+              <div>
+                <div class="metric-title text-danger">Quá Hạn 1 - 30 Ngày</div>
+                <div class="metric-value text-danger" id="debtAging1to30">0 đ</div>
+              </div>
+              <i class="fa-solid fa-clock text-danger fs-2"></i>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="metric-card border-warning">
+              <div>
+                <div class="metric-title text-warning">Quá Hạn 31 - 60 Ngày</div>
+                <div class="metric-value text-warning" id="debtAging31to60">0 đ</div>
+              </div>
+              <i class="fa-solid fa-calendar-xmark text-warning fs-2"></i>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="metric-card border-dark">
+              <div>
+                <div class="metric-title text-dark">Nợ Khó Đòi (> 60 Ngày)</div>
+                <div class="metric-value text-dark" id="debtAgingAbove60">0 đ</div>
+              </div>
+              <i class="fa-solid fa-ban text-dark fs-2"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-box">
+          <div class="box-header">
+            <h3 class="box-title"><i class="fa-solid fa-table-list text-danger me-2"></i>Chi Tiết Công Nợ Từng Hóa Đơn & Tuổi Nợ (Aging Report)</h3>
+            <button class="btn btn-sm btn-outline-success" onclick="exportDebtCSV()"><i class="fa-solid fa-file-csv me-1"></i>Xuất CSV Báo Cáo</button>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Hóa Đơn</th>
+                  <th>Khách Hàng</th>
+                  <th>Số Tiền Còn Nợ</th>
+                  <th>Hạn Trả</th>
+                  <th>Số Ngày Quá Hạn</th>
+                  <th>Phân Loại Tuổi Nợ</th>
+                  <th>Thao Tác</th>
+                </tr>
+              </thead>
+              <tbody id="debtTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SECTION 6: AUDIT LOGS ================= -->
+      <div id="section-audit" style="display: none;">
+        <div class="table-box mt-0">
+          <div class="box-header">
+            <h3 class="box-title"><i class="fa-solid fa-shield-halved text-primary me-2"></i>Nhật Ký Thao Tác Hệ Thống (Audit Trail)</h3>
+            <button class="btn btn-sm btn-outline-secondary" onclick="loadAudit()"><i class="fa-solid fa-rotate me-1"></i>Tải lại</button>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-sm table-hover">
+              <thead>
+                <tr>
+                  <th>Thời Gian</th>
+                  <th>Hành Động</th>
+                  <th>Phân Hệ</th>
+                  <th>Chi Tiết Ghi Nhận</th>
+                </tr>
+              </thead>
+              <tbody id="auditTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SECTION 7: CỔNG THÔNG TIN KHÁCH HÀNG (CLIENT PORTAL) ================= -->
+      <div id="section-client-portal" style="display: none;">
+        
+        <!-- Welcome Hero Banner -->
+        <div class="client-hero-card">
+          <div class="row align-items-center">
+            <div class="col-lg-8">
+              <div class="d-flex align-items-center gap-3 mb-2">
+                <div class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; font-size: 24px;">
+                  <i class="fa-solid fa-building"></i>
+                </div>
+                <div>
+                  <h3 class="mb-0 fw-bold" id="cpCompanyName">Công ty Cổ phần FPT Software</h3>
+                  <div class="opacity-75 small">Cổng thông tin đối tác tuyển dụng B2B | GODDY Recruit</div>
+                </div>
+              </div>
+              <div class="d-flex flex-wrap gap-3 mt-3 pt-2 border-top border-white border-opacity-25 text-white-50 small">
+                <div><strong class="text-white">Mã số thuế:</strong> <span id="cpTaxCode" class="text-white">0101778163</span></div>
+                <div>•</div>
+                <div><strong class="text-white">Hạn thanh toán:</strong> <span id="cpNetDays" class="badge bg-warning text-dark">Net 30 ngày</span></div>
+                <div>•</div>
+                <div><strong class="text-white">Trạng thái:</strong> <span id="cpStatus" class="badge bg-success">Active</span></div>
+                <div>•</div>
+                <div><strong class="text-white">Người liên hệ:</strong> <span id="cpContactPerson" class="text-white">Trần Thu Hà</span> (<span id="cpContactEmail" class="text-white">hr@fpt.com</span>)</div>
+              </div>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+              <button class="btn btn-warning fw-bold px-3 py-2 shadow-sm me-2" onclick="openClientRequestJobModal()">
+                <i class="fa-solid fa-plus-circle me-1"></i> Yêu cầu tuyển dụng
+              </button>
+              <button class="btn btn-outline-light px-3 py-2" onclick="loadClientPortal(currentClientId)">
+                <i class="fa-solid fa-rotate me-1"></i> Làm mới
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Metric Cards for Client -->
+        <div class="row g-4">
+          <div class="col-md-3">
+            <div class="metric-card border-danger">
+              <div>
+                <div class="metric-title text-danger">Công Nợ Cần Thanh Toán</div>
+                <div class="metric-value text-danger" id="cpValRemaining">0 đ</div>
+              </div>
+              <div class="metric-icon-box bg-danger-subtle text-danger">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="metric-card border-success">
+              <div>
+                <div class="metric-title text-success">Đã Thanh Toán Thành Công</div>
+                <div class="metric-value text-success" id="cpValPaid">0 đ</div>
+              </div>
+              <div class="metric-icon-box bg-success-subtle text-success">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="metric-card border-primary">
+              <div>
+                <div class="metric-title text-primary">Vị Trí Đang Mở Tuyển</div>
+                <div class="metric-value text-primary" id="cpValActiveJobs">0 Jobs</div>
+              </div>
+              <div class="metric-icon-box bg-primary-subtle text-primary">
+                <i class="fa-solid fa-briefcase"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="metric-card border-warning">
+              <div>
+                <div class="metric-title text-warning">Ứng Viên Bảo Hành (60d)</div>
+                <div class="metric-value text-warning" id="cpValWarranty">0 Ứng viên</div>
+              </div>
+              <div class="metric-icon-box bg-warning-subtle text-warning">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Client Portal Sub Navigation -->
+        <div class="d-flex flex-wrap gap-2 mt-4 mb-3">
+          <button class="client-subnav-btn active" id="btnSubNavInvoices" onclick="switchClientSubTab('invoices')">
+            <i class="fa-solid fa-file-invoice-dollar"></i> Hóa Đơn & Thanh Toán
+          </button>
+          <button class="client-subnav-btn" id="btnSubNavJobs" onclick="switchClientSubTab('jobs')">
+            <i class="fa-solid fa-briefcase"></i> Vị Trí Tuyển Dụng
+          </button>
+          <button class="client-subnav-btn" id="btnSubNavPlacements" onclick="switchClientSubTab('placements')">
+            <i class="fa-solid fa-user-check"></i> Ứng Viên & Bảo Hành (60 ngày)
+          </button>
+          <button class="client-subnav-btn" id="btnSubNavProfile" onclick="switchClientSubTab('profile')">
+            <i class="fa-solid fa-id-card"></i> Hồ Sơ Doanh Nghiệp
+          </button>
+        </div>
+
+        <!-- SUBTAB 1: HÓA ĐƠN & THANH TOÁN -->
+        <div id="clientSubTabInvoices">
+          <!-- Hướng dẫn chuyển khoản ngân hàng -->
+          <div class="bank-card mb-4">
+            <div class="row align-items-center">
+              <div class="col-md-8">
+                <h5 class="fw-bold mb-1 text-primary"><i class="fa-solid fa-building-columns me-2"></i>Thông Tin Chuyển Khoản Thanh Toán Hóa Đơn</h5>
+                <div class="text-muted small mb-2">Quý đối tác vui lòng thanh toán đúng hạn quy định Net Days để đảm bảo tiến độ bảo hành nhân sự.</div>
+                <div class="row g-2 small">
+                  <div class="col-sm-6"><strong>Ngân hàng:</strong> Vietcombank (Chi nhánh Hội Sở)</div>
+                  <div class="col-sm-6"><strong>Số tài khoản:</strong> <span class="badge bg-dark fs-6 font-monospace">1010 1088 99</span></div>
+                  <div class="col-sm-6"><strong>Chủ tài khoản:</strong> CÔNG TY CỔ PHẦN GODDY RECRUIT VIETNAM</div>
+                  <div class="col-sm-6"><strong>Nội dung CK:</strong> <code class="text-danger fw-bold">[Mã Hóa Đơn] - [Mã Số Thuế]</code></div>
+                </div>
+              </div>
+              <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <div class="p-3 bg-white border rounded-3 text-center d-inline-block shadow-sm">
+                  <i class="fa-solid fa-qrcode fs-1 text-primary mb-1"></i>
+                  <div class="small fw-bold text-muted">VietQR Chuyển Nhanh 24/7</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-box mt-0">
+            <div class="box-header">
+              <h3 class="box-title"><i class="fa-solid fa-receipt text-primary me-2"></i>Danh Sách Hóa Đơn Của Doanh Nghiệp</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Mã Hóa Đơn</th>
+                    <th>Ngày Phát Hành</th>
+                    <th>Hạn Thanh Toán</th>
+                    <th>Tổng Tiền (VAT 8%)</th>
+                    <th>Đã Trả</th>
+                    <th>Còn Phải Thu</th>
+                    <th>Trạng Thái</th>
+                    <th>Chi Tiết</th>
+                  </tr>
+                </thead>
+                <tbody id="cpInvoicesTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB 2: VỊ TRÍ TUYỂN DỤNG -->
+        <div id="clientSubTabJobs" style="display: none;">
+          <div class="table-box mt-0">
+            <div class="box-header">
+              <h3 class="box-title"><i class="fa-solid fa-briefcase text-primary me-2"></i>Vị Trí Đã Đặt Hàng Tuyển Dụng</h3>
+              <button class="btn btn-sm btn-primary" onclick="openClientRequestJobModal()">
+                <i class="fa-solid fa-plus me-1"></i> Gửi Yêu Cầu Tuyển Dụng Mới
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Vị Trí Tuyển Dụng</th>
+                    <th>Khối / Phòng Ban</th>
+                    <th>Dải Lương Dự Kiến</th>
+                    <th>Phí Dịch Vụ (%)</th>
+                    <th>Trạng Thái Tuyển Dụng</th>
+                  </tr>
+                </thead>
+                <tbody id="cpJobsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB 3: ỨNG VIÊN & BẢO HÀNH (60 NGÀY) -->
+        <div id="clientSubTabPlacements" style="display: none;">
+          <div class="table-box mt-0">
+            <div class="box-header">
+              <h3 class="box-title"><i class="fa-solid fa-user-shield text-success me-2"></i>Hồ Sơ Ứng Viên Onboard & Theo Dõi Bảo Hành 60 Ngày</h3>
+            </div>
+            <div class="alert alert-info py-2 px-3 small border-0 bg-info-subtle text-info-emphasis mb-3">
+              <i class="fa-solid fa-circle-info me-1"></i> Chính sách GODDY Recruit: Cam kết bảo hành 1 đổi 1 miễn phí hoặc hoàn phí nếu ứng viên thôi việc trong vòng 60 ngày kể từ ngày Onboard.
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Ứng Viên</th>
+                    <th>Vị Trí Tuyển</th>
+                    <th>Mức Lương Chính Thức</th>
+                    <th>Ngày Onboard</th>
+                    <th>Thời Hạn Bảo Hành</th>
+                    <th>Ngày Hết Hạn</th>
+                    <th>Trạng Thái Bảo Hành</th>
+                  </tr>
+                </thead>
+                <tbody id="cpPlacementsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB 4: HỒ SƠ DOANH NGHIỆP -->
+        <div id="clientSubTabProfile" style="display: none;">
+          <div class="table-box mt-0">
+            <div class="box-header">
+              <h3 class="box-title"><i class="fa-solid fa-id-card text-primary me-2"></i>Hồ Sơ Pháp Lý & Đầu Mối Liên Hệ Doanh Nghiệp</h3>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label text-muted small fw-bold">Tên doanh nghiệp</label>
+                <div class="form-control bg-light fw-bold" id="cpProfName">-</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted small fw-bold">Mã số thuế</label>
+                <div class="form-control bg-light fw-bold" id="cpProfTaxCode">-</div>
+              </div>
+              <div class="col-12">
+                <label class="form-label text-muted small fw-bold">Địa chỉ trụ sở</label>
+                <div class="form-control bg-light" id="cpProfAddress">-</div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-muted small fw-bold">Người đại diện liên hệ</label>
+                <div class="form-control bg-light" id="cpProfPerson">-</div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-muted small fw-bold">Email nhận hóa đơn</label>
+                <div class="form-control bg-light" id="cpProfEmail">-</div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-muted small fw-bold">Số điện thoại liên hệ</label>
+                <div class="form-control bg-light" id="cpProfPhone">-</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted small fw-bold">Chính sách Net Days (Hạn nợ)</label>
+                <div class="form-control bg-light text-primary fw-bold" id="cpProfNetDays">-</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted small fw-bold">Tình trạng hợp tác</label>
+                <div class="form-control bg-light text-success fw-bold" id="cpProfStatus">Active (Đang hợp tác)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ================= MODAL: THÊM KHÁCH HÀNG B2B ================= -->
+  <div class="modal fade" id="modalAddClient" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-building me-2 text-primary"></i>Thêm Khách Hàng Doanh Nghiệp Mới</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="formAddClient" onsubmit="submitAddClient(event)">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Tên công ty / Doanh nghiệp (*)</label>
+              <input type="text" class="form-control" id="newClientName" required placeholder="Ví dụ: Công ty Cổ phần Công nghệ ABC">
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Mã số thuế (*)</label>
+                <input type="text" class="form-control" id="newClientTaxCode" required placeholder="10 hoặc 13 số">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Điều khoản thanh toán</label>
+                <select class="form-select" id="newClientNetDays">
+                  <option value="15">Net 15 ngày</option>
+                  <option value="30" selected>Net 30 ngày (Tiêu chuẩn)</option>
+                  <option value="45">Net 45 ngày</option>
+                  <option value="60">Net 60 ngày</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Địa chỉ trụ sở</label>
+              <input type="text" class="form-control" id="newClientAddress" placeholder="Quận / Thành phố...">
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Người liên hệ</label>
+                <input type="text" class="form-control" id="newClientContactPerson" placeholder="Họ và tên nhân sự">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Số điện thoại</label>
+                <input type="text" class="form-control" id="newClientContactPhone" placeholder="090...">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Email liên hệ nhận hóa đơn</label>
+              <input type="email" class="form-control" id="newClientContactEmail" placeholder="ketoan@doanhnghiep.com">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save me-1"></i>Lưu Khách Hàng</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: CHỐT DEAL TUYỂN DỤNG ================= -->
+  <div class="modal fade" id="modalAddPlacement" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-handshake me-2 text-success"></i>Ghi Nhận Deal Tuyển Dụng Mới (Onboard)</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="formAddPlacement" onsubmit="submitAddPlacement(event)">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Khách hàng (Doanh nghiệp) (*)</label>
+              <select class="form-select" id="placementClientId" required onchange="onSelectClientForPlacement()">
+                <option value="">-- Chọn khách hàng --</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Vị trí tuyển dụng (Job) (*)</label>
+              <select class="form-select" id="placementJobId" required>
+                <option value="">-- Chọn vị trí tuyển dụng --</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Ứng viên (*)</label>
+              <select class="form-select" id="placementCandidateId" required>
+                <option value="">-- Chọn ứng viên --</option>
+              </select>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Mức lương thỏa thuận (VNĐ) (*)</label>
+                <input type="number" class="form-control" id="placementSalary" required placeholder="Ví dụ: 40000000" oninput="calcPlacementFee()">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Tỷ lệ phí dịch vụ (%)</label>
+                <input type="number" class="form-control" id="placementFeeRate" value="18" step="0.5" oninput="calcPlacementFee()">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Phí dịch vụ ước tính (VNĐ)</label>
+              <input type="text" class="form-control fw-bold text-success bg-light" id="placementEstFee" readonly value="0 đ">
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Ngày ứng viên Onboard (*)</label>
+                <input type="date" class="form-control" id="placementOnboardDate" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Thời hạn bảo hành (Ngày)</label>
+                <input type="number" class="form-control" id="placementWarrantyDays" value="60">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-check me-1"></i>Chốt Deal</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: GHI NHẬN THANH TOÁN (TRẢ NỢ) ================= -->
+  <div class="modal fade" id="modalRecordPayment" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-money-bill-wave me-2 text-success"></i>Ghi Nhận Thanh Toán Công Nợ</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="formRecordPayment" onsubmit="submitRecordPayment(event)">
+          <div class="modal-body">
+            <input type="hidden" id="payInvoiceId">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Hóa đơn thanh toán</label>
+              <input type="text" class="form-control bg-light" id="payInvoiceCode" readonly>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Số tiền nợ còn lại</label>
+              <input type="text" class="form-control bg-light fw-bold text-danger" id="payRemainingText" readonly>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Số tiền khách hàng thanh toán (VNĐ) (*)</label>
+              <input type="number" class="form-control" id="payAmount" required placeholder="Nhập số tiền trả">
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Phương thức thanh toán</label>
+                <select class="form-select" id="payMethod">
+                  <option value="BankTransfer">Chuyển khoản ngân hàng</option>
+                  <option value="Cash">Tiền mặt</option>
+                  <option value="CreditCard">Thẻ tín dụng doanh nghiệp</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Mã tham chiếu / Ủy nhiệm chi</label>
+                <input type="text" class="form-control" id="payRefCode" placeholder="FT...">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Ghi chú</label>
+              <textarea class="form-control" id="payNotes" rows="2" placeholder="Ví dụ: Đã nhận tiền từ tài khoản Techcombank"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-circle-check me-1"></i>Xác Nhận Thu Tiền</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: XEM & IN HÓA ĐƠN PDF ================= -->
+  <div class="modal fade" id="modalInvoiceDetail" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-file-invoice me-2 text-primary"></i>Hóa Đơn Giá Trị Gia Tăng (VAT)</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="invoice-print-sheet" id="invoicePrintSheet">
+            <div class="d-flex justify-content-between align-items-start border-bottom pb-3 mb-4">
+              <div>
+                <h4 class="fw-bold text-primary mb-1">GODDY RECRUITMENT SERVICES</h4>
+                <div class="text-muted small">Cung cấp dịch vụ Tuyển dụng & Headhunting cao cấp</div>
+                <div class="text-muted small">Địa chỉ: Tòa nhà TechHub, Cầu Giấy, Hà Nội</div>
+                <div class="text-muted small">Mã số thuế: 0109988776</div>
+              </div>
+              <div class="text-end">
+                <h3 class="fw-bold mb-1" id="invDetailCode">INV-2026-0001</h3>
+                <div class="text-muted small">Ngày lập: <span id="invDetailIssueDate">--</span></div>
+                <div class="text-danger small fw-bold">Hạn thanh toán: <span id="invDetailDueDate">--</span></div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-6">
+                <div class="text-muted small text-uppercase fw-bold">Khách hàng (Người mua)</div>
+                <h5 class="fw-bold mb-1" id="invDetailClientName">Công ty Cổ phần FPT Software</h5>
+                <div class="small">Mã số thuế: <strong id="invDetailTaxCode">--</strong></div>
+                <div class="small text-muted" id="invDetailAddress">--</div>
+              </div>
+              <div class="col-6 text-end">
+                <div class="text-muted small text-uppercase fw-bold">Trạng thái thanh toán</div>
+                <div id="invDetailStatusBadge" class="mt-1"></div>
+              </div>
+            </div>
+
+            <table class="table table-bordered mb-4">
+              <thead class="table-light">
+                <tr>
+                  <th>Nội Dung Dịch Vụ</th>
+                  <th>Ứng Viên / Vị Trí</th>
+                  <th class="text-end">Thành Tiền (VNĐ)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Phí dịch vụ Headhunt tuyển dụng nhân sự chính thức</td>
+                  <td id="invDetailPlacementInfo">Senior NodeJS Engineer</td>
+                  <td class="text-end fw-bold" id="invDetailSubtotal">0 đ</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2" class="text-end text-muted">Cộng tiền dịch vụ:</td>
+                  <td class="text-end fw-bold" id="invDetailSubtotalFoot">0 đ</td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="text-end text-muted">Thuế suất GTGT (VAT 8%):</td>
+                  <td class="text-end text-muted" id="invDetailVat">0 đ</td>
+                </tr>
+                <tr class="table-light">
+                  <td colspan="2" class="text-end fw-bold fs-6">TỔNG CỘNG THANH TOÁN:</td>
+                  <td class="text-end fw-bold text-primary fs-5" id="invDetailTotal">0 đ</td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="text-end text-success">Đã thanh toán:</td>
+                  <td class="text-end text-success fw-bold" id="invDetailPaid">0 đ</td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="text-end text-danger fw-bold">CÒN PHẢI THU:</td>
+                  <td class="text-end text-danger fw-bold fs-6" id="invDetailRemaining">0 đ</td>
+                </tr>
+              </tfoot>
+            </table>
+
+            <div class="row pt-4 text-center">
+              <div class="col-6">
+                <div class="fw-bold">Đại Diện Khách Hàng</div>
+                <div class="text-muted small mt-1">(Ký, ghi rõ họ tên)</div>
+              </div>
+              <div class="col-6">
+                <div class="fw-bold">Đại Diện GODDY Recruit</div>
+                <div class="text-muted small mt-1">(Ký, đóng dấu điện tử)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-primary" onclick="window.print()">
+            <i class="fa-solid fa-print me-1"></i>In / Xuất PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: KHÁCH HÀNG GỬI YÊU CẦU TUYỂN DỤNG ================= -->
+  <div class="modal fade" id="modalClientRequestJob" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-paper-plane me-2 text-primary"></i>Gửi Yêu Cầu Tuyển Dụng Mới</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="formClientRequestJob" onsubmit="submitClientRequestJob(event)">
+          <div class="modal-body">
+            <div class="alert alert-primary py-2 px-3 small border-0 bg-primary-subtle text-primary-emphasis mb-3">
+              Yêu cầu của bạn sẽ được chuyển trực tiếp tới đội ngũ Headhunter của GODDY Recruit để bắt đầu săn nhân sự.
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Chức danh / Vị trí tuyển dụng (*)</label>
+              <input type="text" class="form-control" id="cpJobTitle" required placeholder="Ví dụ: Senior Data Engineer, Trưởng phòng Marketing...">
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Khối / Phòng ban (*)</label>
+              <input type="text" class="form-control" id="cpJobDepartment" required placeholder="Ví dụ: Khối Công nghệ thông tin, Ban Tài chính...">
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Dải lương dự kiến (Gross)</label>
+              <input type="text" class="form-control" id="cpJobSalary" placeholder="Ví dụ: 30 - 45 triệu VND, Thỏa thuận theo năng lực...">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check me-1"></i>Gửi Yêu Cầu Cho GODDY</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ĐĂNG NHẬP HỆ THỐNG ================= -->
+  <div class="modal fade" id="modalLogin" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+        <div class="modal-header border-0 pb-0">
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body px-4 pt-0 pb-4">
+          <div class="text-center mb-4">
+            <div class="sidebar-logo-icon mx-auto mb-2" style="width: 50px; height: 50px; font-size: 24px;">
+              <i class="fa-solid fa-lock"></i>
+            </div>
+            <h4 class="fw-bold">Đăng Nhập Hệ Thống</h4>
+            <div class="text-muted small">GODDY Recruit - Quản trị Tài chính Tuyển dụng</div>
+          </div>
+
+          <form id="formLogin" onsubmit="submitLogin(event)">
+            <div class="mb-3">
+              <label class="form-label fw-bold small">Tên đăng nhập</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-user text-muted"></i></span>
+                <input type="text" class="form-control border-start-0" id="loginUsername" required placeholder="admin / ketoan / recruiter / fpt_client">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold small">Mật khẩu</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-key text-muted"></i></span>
+                <input type="password" class="form-control border-start-0" id="loginPassword" required value="123456">
+              </div>
+              <div class="form-text small">Mật khẩu mặc định cho tất cả tài khoản: <code>123456</code></div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm mt-3" style="border-radius: 12px;">
+              <i class="fa-solid fa-right-to-bracket me-1"></i> Đăng Nhập
+            </button>
+          </form>
+
+          <div class="mt-4 pt-3 border-top">
+            <div class="small fw-bold text-muted mb-2 text-center">Hoặc chọn nhanh tài khoản thử nghiệm:</div>
+            <div class="d-flex flex-wrap gap-1 justify-content-center">
+              <button class="btn btn-sm btn-outline-danger" onclick="quickFillLogin('admin', '123456')">Admin</button>
+              <button class="btn btn-sm btn-outline-success" onclick="quickFillLogin('ketoan', '123456')">Kế toán</button>
+              <button class="btn btn-sm btn-outline-warning text-dark" onclick="quickFillLogin('recruiter', '123456')">Recruiter</button>
+              <button class="btn btn-sm btn-outline-primary" onclick="quickFillLogin('fpt_client', '123456')">FPT Software</button>
+              <button class="btn btn-sm btn-outline-primary" onclick="quickFillLogin('vng_client', '123456')">VNG</button>
+              <button class="btn btn-sm btn-outline-primary" onclick="quickFillLogin('shopee_client', '123456')">Shopee</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- APP LOGIC SCRIPT -->
+  <script>
+    let globalClients = [];
+    let globalJobs = [];
+    let globalCandidates = [];
+    let revenueChartInstance = null;
+    let industryChartInstance = null;
+
+    let currentUserRole = 'admin'; // 'admin', 'accountant', 'recruiter', 'client'
+    let currentClientId = 1;
+    let currentUser = {
+      username: 'admin',
+      fullName: 'Huỳnh Nguyễn Vĩnh Phúc',
+      role: 'admin'
+    };
+
+    // Chuyển Tab
+    function switchTab(tabKey) {
+      if (currentUserRole === 'client') {
+        switchUserRole('admin');
+        return;
+      }
+      const sections = ['dashboard', 'clients', 'recruitment', 'invoices', 'debt', 'audit', 'client-portal'];
+      sections.forEach(s => {
+        const el = document.getElementById('section-' + s);
+        if (el) el.style.display = (s === tabKey) ? 'block' : 'none';
+      });
+
+      document.querySelectorAll('#sidebarMenuInternal .sidebar-item').forEach(item => item.classList.remove('active'));
+      const activeItem = Array.from(document.querySelectorAll('#sidebarMenuInternal .sidebar-item')).find(el => el.getAttribute('onclick')?.includes(tabKey));
+      if (activeItem) activeItem.classList.add('active');
+
+      const titles = {
+        'dashboard': 'Dashboard Dữ Liệu Tuyển Dụng & Tài Chính',
+        'clients': 'Quản Lý Khách Hàng Doanh Nghiệp (B2B)',
+        'recruitment': 'Quản Lý Deal Tuyển Dụng & Thời Hạn Bảo Hành',
+        'invoices': 'Quản Lý Hóa Đơn Dịch Vụ Tuyển Dụng',
+        'debt': 'Báo Cáo Công Nợ & Phân Tích Tuổi Nợ (Aging Report)',
+        'audit': 'Nhật Ký Thao Tác Hệ Thống (Audit Trail)'
+      };
+      document.getElementById('pageHeaderTitle').textContent = titles[tabKey] || 'GODDY RECRUIT';
+
+      if (tabKey === 'dashboard') loadDashboard();
+      if (tabKey === 'clients') loadClients();
+      if (tabKey === 'recruitment') loadPlacements();
+      if (tabKey === 'invoices') loadInvoices();
+      if (tabKey === 'debt') loadDebt();
+      if (tabKey === 'audit') loadAudit();
+    }
+
+    function reloadCurrentTab() {
+      if (currentUserRole === 'client') {
+        loadClientPortal(currentClientId);
+      } else {
+        const activeItem = document.querySelector('#sidebarMenuInternal .sidebar-item.active');
+        if (activeItem) activeItem.click();
+      }
+    }
+
+    function formatMoney(amount) {
+      return (parseFloat(amount) || 0).toLocaleString('vi-VN') + ' đ';
+    }
+
+    // ================= DASHBOARD =================
+    async function loadDashboard() {
+      try {
+        const res = await fetch('/api/dashboard/stats');
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('valTotalRevenue').textContent = formatMoney(data.stats.totalRevenue);
+          document.getElementById('valTotalAR').textContent = formatMoney(data.stats.totalAR);
+          document.getElementById('valOverdueAR').textContent = formatMoney(data.stats.overdueAR);
+          document.getElementById('valPlacementCount').textContent = data.stats.placementCount + ' Deals';
+          document.getElementById('valCollectionRate').textContent = data.stats.collectionRate + '%';
+          document.getElementById('valBadDebtRate').textContent = data.stats.badDebtRate + '%';
+
+          initCharts(data.chartData);
+
+          // Render Top 5 Debtors
+          const tbody = document.getElementById('topDebtorsTableBody');
+          tbody.innerHTML = '';
+          if (data.topDebtors && data.topDebtors.length > 0) {
+            data.topDebtors.forEach(td => {
+              tbody.innerHTML += `
+                <tr>
+                  <td><strong>${td.companyName}</strong></td>
+                  <td><code>${td.taxCode}</code></td>
+                  <td><span class="badge bg-secondary">${td.invoiceCount} hóa đơn</span></td>
+                  <td class="text-danger fw-bold">${formatMoney(td.totalRemaining)}</td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-primary" onclick="switchTab('debt')">
+                      <i class="fa-solid fa-eye me-1"></i>Xem Chi Tiết
+                    </button>
+                  </td>
+                </tr>
+              `;
+            });
+          } else {
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-3">Hiện không có công nợ tồn đọng!</td></tr>';
+          }
+        }
+      } catch (err) {
+        console.error('Lỗi tải Dashboard:', err);
+      }
+    }
+
+    function initCharts(chartData) {
+      if (revenueChartInstance) revenueChartInstance.destroy();
+      if (industryChartInstance) industryChartInstance.destroy();
+
+      const ctxRev = document.getElementById('revenueChart').getContext('2d');
+      revenueChartInstance = new Chart(ctxRev, {
+        type: 'line',
+        data: {
+          labels: chartData.labels,
+          datasets: [{
+            label: 'Doanh thu thực tế (triệu VNĐ)',
+            data: chartData.revenueByMonth,
+            borderColor: '#4f46e5',
+            backgroundColor: 'rgba(79, 70, 229, 0.08)',
+            fill: true,
+            tension: 0.35,
+            borderWidth: 3,
+            pointBackgroundColor: '#4f46e5',
+            pointRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { grid: { color: '#f1f5f9' }, ticks: { callback: v => v + ' tr' } },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+
+      const ctxInd = document.getElementById('industryChart').getContext('2d');
+      industryChartInstance = new Chart(ctxInd, {
+        type: 'doughnut',
+        data: {
+          labels: chartData.industryShare.labels,
+          datasets: [{
+            data: chartData.industryShare.series,
+            backgroundColor: ['#4f46e5', '#10b981', '#f59e0b', '#ec4899', '#64748b'],
+            borderWidth: 2,
+            borderColor: '#fff'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 14 } } }
+        }
+      });
+    }
+
+    // ================= CLIENTS =================
+    async function loadClients() {
+      const res = await fetch('/api/clients');
+      const data = await res.json();
+      globalClients = data.clients || [];
+      renderClientsTable(globalClients);
+    }
+
+    function renderClientsTable(clients) {
+      const tbody = document.getElementById('clientsTableBody');
+      tbody.innerHTML = '';
+      if (!clients || clients.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-3">Không có khách hàng nào.</td></tr>';
+        return;
+      }
+      clients.forEach(c => {
+        tbody.innerHTML += `
+          <tr>
+            <td>
+              <strong>${c.companyName}</strong><br>
+              <small class="text-muted">${c.address || 'Chưa cập nhật'}</small>
+            </td>
+            <td><code>${c.taxCode}</code></td>
+            <td>${c.contactPerson || '-'}</td>
+            <td>
+              <small>${c.contactEmail || '-'}</small><br>
+              <small class="text-muted">${c.contactPhone || ''}</small>
+            </td>
+            <td><span class="badge bg-secondary">Net ${c.paymentTermDays} ngày</span></td>
+            <td><span class="status-badge badge-paid">${c.status}</span></td>
+          </tr>
+        `;
+      });
+    }
+
+    function filterClientsTable() {
+      const q = document.getElementById('clientSearchInput').value.toLowerCase();
+      const filtered = globalClients.filter(c =>
+        c.companyName.toLowerCase().includes(q) ||
+        c.taxCode.toLowerCase().includes(q) ||
+        (c.contactPerson && c.contactPerson.toLowerCase().includes(q))
+      );
+      renderClientsTable(filtered);
+    }
+
+    function openModalAddClient() {
+      document.getElementById('formAddClient').reset();
+      new bootstrap.Modal(document.getElementById('modalAddClient')).show();
+    }
+
+    async function submitAddClient(e) {
+      e.preventDefault();
+      const body = {
+        companyName: document.getElementById('newClientName').value,
+        taxCode: document.getElementById('newClientTaxCode').value,
+        paymentTermDays: document.getElementById('newClientNetDays').value,
+        address: document.getElementById('newClientAddress').value,
+        contactPerson: document.getElementById('newClientContactPerson').value,
+        contactPhone: document.getElementById('newClientContactPhone').value,
+        contactEmail: document.getElementById('newClientContactEmail').value
+      };
+
+      const res = await fetch('/api/clients', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      if (data.success) {
+        bootstrap.Modal.getInstance(document.getElementById('modalAddClient')).hide();
+        alert('Thêm khách hàng doanh nghiệp thành công!');
+        loadClients();
+      } else {
+        alert(data.message || 'Có lỗi xảy ra!');
+      }
+    }
+
+    // ================= PLACEMENTS =================
+    async function loadPlacements() {
+      const res = await fetch('/api/recruitment/placements');
+      const data = await res.json();
+      const tbody = document.getElementById('placementsTableBody');
+      tbody.innerHTML = '';
+      if (!data.placements || data.placements.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-3">Chưa có deal tuyển dụng nào.</td></tr>';
+        return;
+      }
+      data.placements.forEach(p => {
+        const isWarranty = p.status === 'UnderWarranty';
+        const hasInvoice = p.Invoice != null;
+        tbody.innerHTML += `
+          <tr>
+            <td><strong>${p.Candidate ? p.Candidate.fullName : '-'}</strong></td>
+            <td>${p.Job ? p.Job.title : '-'}</td>
+            <td>${p.Client ? p.Client.companyName : '-'}</td>
+            <td>${formatMoney(p.officialSalary)}</td>
+            <td class="text-success fw-bold">${formatMoney(p.serviceFee)}</td>
+            <td><i class="fa-regular fa-calendar-check me-1"></i>${p.warrantyEndDate || '-'}</td>
+            <td><span class="status-badge ${isWarranty ? 'badge-warranty' : 'badge-passed'}">${p.status}</span></td>
+            <td>
+              ${hasInvoice ? `<span class="badge bg-success">${p.Invoice.invoiceCode}</span>` : `
+                <button class="btn btn-sm btn-outline-primary" onclick="quickIssueInvoice(${p.id})">
+                  <i class="fa-solid fa-file-invoice me-1"></i>Xuất HĐ
+                </button>
+              `}
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    async function openModalAddPlacement() {
+      document.getElementById('formAddPlacement').reset();
+      document.getElementById('placementOnboardDate').valueAsDate = new Date();
+
+      // Load clients
+      const resClients = await fetch('/api/clients');
+      const dClients = await resClients.json();
+      const clientSelect = document.getElementById('placementClientId');
+      clientSelect.innerHTML = '<option value="">-- Chọn khách hàng --</option>';
+      (dClients.clients || []).forEach(c => {
+        clientSelect.innerHTML += `<option value="${c.id}">${c.companyName}</option>`;
+      });
+
+      // Load candidates
+      const resCand = await fetch('/api/recruitment/candidates');
+      const dCand = await resCand.json();
+      const candSelect = document.getElementById('placementCandidateId');
+      candSelect.innerHTML = '<option value="">-- Chọn ứng viên --</option>';
+      (dCand.candidates || []).forEach(c => {
+        candSelect.innerHTML += `<option value="${c.id}">${c.fullName} (${c.currentPosition || ''})</option>`;
+      });
+
+      new bootstrap.Modal(document.getElementById('modalAddPlacement')).show();
+    }
+
+    async function onSelectClientForPlacement() {
+      const cId = document.getElementById('placementClientId').value;
+      const jobSelect = document.getElementById('placementJobId');
+      jobSelect.innerHTML = '<option value="">-- Đang tải vị trí... --</option>';
+      if (!cId) {
+        jobSelect.innerHTML = '<option value="">-- Chọn khách hàng trước --</option>';
+        return;
+      }
+
+      const res = await fetch('/api/recruitment/jobs');
+      const d = await res.json();
+      const clientJobs = (d.jobs || []).filter(j => j.clientId == cId);
+      jobSelect.innerHTML = '';
+      if (clientJobs.length === 0) {
+        jobSelect.innerHTML = '<option value="">(Khách hàng này chưa có Job mở)</option>';
+      } else {
+        clientJobs.forEach(j => {
+          jobSelect.innerHTML += `<option value="${j.id}">${j.title} (${j.department})</option>`;
+        });
+      }
+    }
+
+    function calcPlacementFee() {
+      const salary = parseFloat(document.getElementById('placementSalary').value) || 0;
+      const rate = parseFloat(document.getElementById('placementFeeRate').value) || 18;
+      // Headhunt standard: rate% của lương năm (12 tháng)
+      const fee = salary * 12 * (rate / 100);
+      document.getElementById('placementEstFee').value = formatMoney(fee);
+    }
+
+    async function submitAddPlacement(e) {
+      e.preventDefault();
+      const body = {
+        clientId: document.getElementById('placementClientId').value,
+        jobId: document.getElementById('placementJobId').value,
+        candidateId: document.getElementById('placementCandidateId').value,
+        officialSalary: document.getElementById('placementSalary').value,
+        feeRatePercent: document.getElementById('placementFeeRate').value,
+        onboardDate: document.getElementById('placementOnboardDate').value,
+        warrantyDays: document.getElementById('placementWarrantyDays').value
+      };
+
+      const res = await fetch('/api/recruitment/placements', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      if (data.success) {
+        bootstrap.Modal.getInstance(document.getElementById('modalAddPlacement')).hide();
+        alert('Ghi nhận deal tuyển dụng thành công!');
+        loadPlacements();
+      } else {
+        alert(data.message || 'Lỗi khi chốt deal!');
+      }
+    }
+
+    async function quickIssueInvoice(placementId) {
+      if (!confirm('Bạn có chắc chắn muốn phát hành hóa đơn VAT cho deal tuyển dụng này?')) return;
+      const res = await fetch('/api/invoices/from-placement', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ placementId, vatRate: 8.0 })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert(`Phát hành hóa đơn thành công! Mã HĐ: ${data.invoice.invoiceCode}`);
+        loadPlacements();
+      } else {
+        alert(data.message || 'Lỗi phát hành hóa đơn!');
+      }
+    }
+
+    // ================= INVOICES =================
+    async function loadInvoices() {
+      const status = document.getElementById('invoiceFilterStatus').value;
+      const url = status === 'All' ? '/api/invoices' : `/api/invoices?status=${status}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      const tbody = document.getElementById('invoicesTableBody');
+      tbody.innerHTML = '';
+      if (!data.invoices || data.invoices.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-3">Không có hóa đơn nào.</td></tr>';
+        return;
+      }
+      data.invoices.forEach(inv => {
+        let badgeClass = 'badge-sent';
+        if (inv.status === 'Paid') badgeClass = 'badge-paid';
+        if (inv.status === 'Partial') badgeClass = 'badge-partial';
+        if (inv.status === 'Overdue') badgeClass = 'badge-overdue';
+
+        tbody.innerHTML += `
+          <tr>
+            <td><strong>${inv.invoiceCode}</strong></td>
+            <td>${inv.Client ? inv.Client.companyName : '-'}</td>
+            <td class="fw-bold">${formatMoney(inv.totalAmount)}</td>
+            <td class="text-success">${formatMoney(inv.paidAmount)}</td>
+            <td class="text-danger fw-bold">${formatMoney(inv.remainingAmount)}</td>
+            <td>${inv.dueDate}</td>
+            <td><span class="status-badge ${badgeClass}">${inv.status}</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary" onclick="viewInvoiceDetail(${inv.id})">
+                <i class="fa-solid fa-file-lines me-1"></i>Xem & In
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    async function viewInvoiceDetail(invoiceId) {
+      const res = await fetch(`/api/invoices/${invoiceId}`);
+      const data = await res.json();
+      if (!data.success || !data.invoice) return alert('Không tìm thấy thông tin hóa đơn!');
+      const inv = data.invoice;
+
+      document.getElementById('invDetailCode').textContent = inv.invoiceCode;
+      document.getElementById('invDetailIssueDate').textContent = inv.issueDate;
+      document.getElementById('invDetailDueDate').textContent = inv.dueDate;
+      document.getElementById('invDetailClientName').textContent = inv.Client ? inv.Client.companyName : '-';
+      document.getElementById('invDetailTaxCode').textContent = inv.Client ? inv.Client.taxCode : '-';
+      document.getElementById('invDetailAddress').textContent = inv.Client ? inv.Client.address : '-';
+
+      const candidateName = inv.Placement?.Candidate?.fullName || 'Ứng viên';
+      const jobTitle = inv.Placement?.Job?.title || 'Chuyên viên';
+      document.getElementById('invDetailPlacementInfo').textContent = `${candidateName} - ${jobTitle}`;
+
+      document.getElementById('invDetailSubtotal').textContent = formatMoney(inv.subtotal);
+      document.getElementById('invDetailSubtotalFoot').textContent = formatMoney(inv.subtotal);
+      document.getElementById('invDetailVat').textContent = formatMoney(inv.vatAmount);
+      document.getElementById('invDetailTotal').textContent = formatMoney(inv.totalAmount);
+      document.getElementById('invDetailPaid').textContent = formatMoney(inv.paidAmount);
+      document.getElementById('invDetailRemaining').textContent = formatMoney(inv.remainingAmount);
+
+      let badgeClass = 'badge-sent';
+      if (inv.status === 'Paid') badgeClass = 'badge-paid';
+      if (inv.status === 'Partial') badgeClass = 'badge-partial';
+      if (inv.status === 'Overdue') badgeClass = 'badge-overdue';
+      document.getElementById('invDetailStatusBadge').innerHTML = `<span class="status-badge ${badgeClass}">${inv.status}</span>`;
+
+      new bootstrap.Modal(document.getElementById('modalInvoiceDetail')).show();
+    }
+
+    // ================= DEBT & AGING =================
+    async function loadDebt() {
+      const res = await fetch('/api/debt/overview');
+      const data = await res.json();
+      document.getElementById('debtAging1to30').textContent = formatMoney(data.summary.aging0to30);
+      document.getElementById('debtAging31to60').textContent = formatMoney(data.summary.aging31to60);
+      document.getElementById('debtAgingAbove60').textContent = formatMoney(data.summary.agingAbove60);
+
+      const tbody = document.getElementById('debtTableBody');
+      tbody.innerHTML = '';
+      if (!data.debtList || data.debtList.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-3">Hiện không có công nợ cần thu!</td></tr>';
+        return;
+      }
+      data.debtList.forEach(item => {
+        tbody.innerHTML += `
+          <tr>
+            <td><strong>${item.invoiceCode}</strong></td>
+            <td>${item.Client ? item.Client.companyName : '-'}</td>
+            <td class="text-danger fw-bold">${formatMoney(item.remainingAmount)}</td>
+            <td>${item.dueDate}</td>
+            <td>
+              <span class="badge ${item.overdueDays > 0 ? 'bg-danger' : 'bg-success'}">
+                ${item.overdueDays > 0 ? item.overdueDays + ' ngày quá hạn' : 'Trong hạn'}
+              </span>
+            </td>
+            <td><strong>${item.agingCategory}</strong></td>
+            <td>
+              <div class="d-flex gap-1">
+                <button class="btn btn-sm btn-success" onclick="openRecordPayment(${item.id}, '${item.invoiceCode}', ${item.remainingAmount})">
+                  <i class="fa-solid fa-hand-holding-dollar me-1"></i>Thu Tiền
+                </button>
+                <button class="btn btn-sm btn-outline-danger" onclick="sendDebtReminder(${item.id})">
+                  <i class="fa-solid fa-bell me-1"></i>Nhắc Nợ
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function openRecordPayment(invId, invCode, remaining) {
+      document.getElementById('payInvoiceId').value = invId;
+      document.getElementById('payInvoiceCode').value = invCode;
+      document.getElementById('payRemainingText').value = formatMoney(remaining);
+      document.getElementById('payAmount').value = remaining;
+      document.getElementById('payAmount').max = remaining;
+      new bootstrap.Modal(document.getElementById('modalRecordPayment')).show();
+    }
+
+    async function submitRecordPayment(e) {
+      e.preventDefault();
+      const body = {
+        invoiceId: document.getElementById('payInvoiceId').value,
+        amount: document.getElementById('payAmount').value,
+        paymentMethod: document.getElementById('payMethod').value,
+        referenceCode: document.getElementById('payRefCode').value,
+        notes: document.getElementById('payNotes').value
+      };
+
+      const res = await fetch('/api/debt/payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      if (data.success) {
+        bootstrap.Modal.getInstance(document.getElementById('modalRecordPayment')).hide();
+        alert('Ghi nhận thanh toán thành công!');
+        loadDebt();
+      } else {
+        alert(data.message || 'Lỗi khi thu tiền!');
+      }
+    }
+
+    async function sendDebtReminder(invoiceId) {
+      const res = await fetch('/api/debt/remind', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ invoiceId })
+      });
+      const data = await res.json();
+      alert(data.message || 'Đã gửi lời nhắc nợ thành công!');
+    }
+
+    // ================= AUDIT LOGS =================
+    async function loadAudit() {
+      const res = await fetch('/api/audit');
+      const data = await res.json();
+      const tbody = document.getElementById('auditTableBody');
+      tbody.innerHTML = '';
+      if (!data.logs || data.logs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted py-3">Chưa có nhật ký nào.</td></tr>';
+        return;
+      }
+      data.logs.forEach(l => {
+        const time = new Date(l.createdAt).toLocaleTimeString('vi-VN') + ' ' + new Date(l.createdAt).toLocaleDateString('vi-VN');
+        tbody.innerHTML += `
+          <tr>
+            <td class="text-muted"><small>${time}</small></td>
+            <td><span class="badge bg-dark">${l.action}</span></td>
+            <td><span class="badge bg-secondary">${l.module}</span></td>
+            <td>${l.details}</td>
+          </tr>
+        `;
+      });
+    }
+
+    // ================= EXPORT CSV HELPERS =================
+    function exportClientsCSV() {
+      if (!globalClients.length) return alert('Không có dữ liệu!');
+      let csv = 'ID,Doanh Nghiệp,Mã Số Thuế,Địa Chỉ,Người Liên Hệ,Email,Điện Thoại,NetDays\n';
+      globalClients.forEach(c => {
+        csv += `"${c.id}","${c.companyName}","${c.taxCode}","${c.address || ''}","${c.contactPerson || ''}","${c.contactEmail || ''}","${c.contactPhone || ''}","${c.paymentTermDays}"\n`;
+      });
+      downloadCSV(csv, 'Danh_Sach_Khach_Hang_B2B.csv');
+    }
+
+    async function exportInvoicesCSV() {
+      const res = await fetch('/api/invoices');
+      const data = await res.json();
+      let csv = 'Mã Hóa Đơn,Khách Hàng,Tổng Tiền,Đã Trả,Còn Nợ,Hạn Trả,Trạng Thái\n';
+      (data.invoices || []).forEach(i => {
+        csv += `"${i.invoiceCode}","${i.Client?.companyName || ''}","${i.totalAmount}","${i.paidAmount}","${i.remainingAmount}","${i.dueDate}","${i.status}"\n`;
+      });
+      downloadCSV(csv, 'Danh_Sach_Hoa_Don.csv');
+    }
+
+    async function exportDebtCSV() {
+      const res = await fetch('/api/debt/overview');
+      const data = await res.json();
+      let csv = 'Mã Hóa Đơn,Khách Hàng,Số Tiền Nợ,Hạn Trả,Số Ngày Quá Hạn,Phân Loại Tuổi Nợ\n';
+      (data.debtList || []).forEach(d => {
+        csv += `"${d.invoiceCode}","${d.Client?.companyName || ''}","${d.remainingAmount}","${d.dueDate}","${d.overdueDays}","${d.agingCategory}"\n`;
+      });
+      downloadCSV(csv, 'Bao_Cao_Tuoi_No_Aging_Report.csv');
+    }
+
+    function downloadCSV(csv, filename) {
+      const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // ================= CLIENT PORTAL & ROLE SWITCHER LOGIC =================
+    function switchUserRole(role, clientId = 1) {
+      currentUserRole = role;
+      currentClientId = clientId;
+
+      const roleBadge = document.getElementById('roleBadge');
+      const navRoleTitle = document.getElementById('navRoleTitle');
+      const sidebarMenuInternal = document.getElementById('sidebarMenuInternal');
+      const sidebarMenuClient = document.getElementById('sidebarMenuClient');
+      const sidebarFooterInternal = document.getElementById('sidebarFooterInternal');
+      const sidebarFooterClient = document.getElementById('sidebarFooterClient');
+      const sidebarLogoIcon = document.getElementById('sidebarLogoIcon');
+      const sidebarMainTitle = document.getElementById('sidebarMainTitle');
+      const sidebarSubTitle = document.getElementById('sidebarSubTitle');
+
+      if (role === 'client') {
+        sidebarMenuInternal.style.display = 'none';
+        sidebarMenuClient.style.display = 'block';
+        sidebarFooterInternal.style.display = 'none';
+        sidebarFooterClient.style.display = 'block';
+
+        sidebarLogoIcon.innerHTML = '<i class="fa-solid fa-building"></i>';
+        sidebarMainTitle.textContent = 'CỔNG KHÁCH HÀNG';
+
+        roleBadge.className = 'badge bg-primary rounded-pill px-2 py-1';
+        roleBadge.textContent = 'Khách hàng B2B';
+
+        const clientNames = {
+          1: 'FPT Software (Trần Thu Hà)',
+          2: 'VNG Corporation (Nguyễn Hoàng Long)',
+          3: 'Shopee Việt Nam (Lê Thùy Dương)'
+        };
+        const cName = clientNames[clientId] || 'Doanh Nghiệp Đối Tác';
+        navRoleTitle.textContent = cName;
+        sidebarSubTitle.textContent = cName.split('(')[0].trim();
+
+        // Ẩn tất cả section nội bộ, hiện section client portal
+        const sections = ['dashboard', 'clients', 'recruitment', 'invoices', 'debt', 'audit'];
+        sections.forEach(s => {
+          const el = document.getElementById('section-' + s);
+          if (el) el.style.display = 'none';
+        });
+        document.getElementById('section-client-portal').style.display = 'block';
+        document.getElementById('pageHeaderTitle').textContent = `Cổng Thông Tin Doanh Nghiệp - ${sidebarSubTitle.textContent}`;
+
+        switchClientSubTab('invoices');
+        loadClientPortal(clientId);
+      } else {
+        sidebarMenuInternal.style.display = 'block';
+        sidebarMenuClient.style.display = 'none';
+        sidebarFooterInternal.style.display = 'block';
+        sidebarFooterClient.style.display = 'none';
+
+        sidebarLogoIcon.innerHTML = '<i class="fa-solid fa-chart-pie"></i>';
+        sidebarMainTitle.textContent = 'GODDY RECRUIT';
+        sidebarSubTitle.textContent = 'Quản Lý Công Nợ B2B';
+
+        document.getElementById('section-client-portal').style.display = 'none';
+
+        if (role === 'admin') {
+          roleBadge.className = 'badge bg-danger rounded-pill px-2 py-1';
+          roleBadge.textContent = 'Admin';
+          navRoleTitle.textContent = 'Huỳnh Nguyễn Vĩnh Phúc';
+        } else if (role === 'accountant') {
+          roleBadge.className = 'badge bg-success rounded-pill px-2 py-1';
+          roleBadge.textContent = 'Kế toán';
+          navRoleTitle.textContent = 'Phạm Sơn (Kế toán trưởng)';
+        } else if (role === 'recruiter') {
+          roleBadge.className = 'badge bg-warning text-dark rounded-pill px-2 py-1';
+          roleBadge.textContent = 'Recruiter';
+          navRoleTitle.textContent = 'Nguyễn Văn Minh (Senior)';
+        }
+
+        switchTab('dashboard');
+      }
+    }
+
+    function switchClientSubTab(subTabKey) {
+      const subTabs = ['invoices', 'jobs', 'placements', 'profile'];
+      subTabs.forEach(t => {
+        const tabEl = document.getElementById('clientSubTab' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (tabEl) tabEl.style.display = (t === subTabKey) ? 'block' : 'none';
+      });
+
+      // Update subnav buttons
+      document.querySelectorAll('.client-subnav-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btnSubNav' + subTabKey.charAt(0).toUpperCase() + subTabKey.slice(1));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      // Update sidebar items in client mode
+      document.querySelectorAll('#sidebarMenuClient .sidebar-item').forEach(item => item.classList.remove('active'));
+      const activeSidebar = Array.from(document.querySelectorAll('#sidebarMenuClient .sidebar-item')).find(el => el.getAttribute('onclick')?.includes(subTabKey));
+      if (activeSidebar) activeSidebar.classList.add('active');
+    }
+
+    async function loadClientPortal(clientId) {
+      try {
+        const res = await fetch(`/api/clients/portal/${clientId}`);
+        const data = await res.json();
+        if (!data.success || !data.client) {
+          alert('Không thể tải dữ liệu cổng khách hàng!');
+          return;
+        }
+
+        const client = data.client;
+        const summary = data.summary;
+
+        // Hero info
+        document.getElementById('cpCompanyName').textContent = client.companyName;
+        document.getElementById('cpTaxCode').textContent = client.taxCode;
+        document.getElementById('cpNetDays').textContent = `Net ${client.paymentTermDays} ngày`;
+        document.getElementById('cpStatus').textContent = client.status;
+        document.getElementById('cpContactPerson').textContent = client.contactPerson || '-';
+        document.getElementById('cpContactEmail').textContent = client.contactEmail || '-';
+
+        // 4 Metric cards
+        document.getElementById('cpValRemaining').textContent = formatMoney(summary.totalRemaining);
+        document.getElementById('cpValPaid').textContent = formatMoney(summary.totalPaid);
+        document.getElementById('cpValActiveJobs').textContent = summary.activeJobs + ' Vị trí';
+        document.getElementById('cpValWarranty').textContent = summary.warrantyActive + ' Ứng viên';
+
+        // 1. Table Invoices
+        const tbodyInv = document.getElementById('cpInvoicesTableBody');
+        tbodyInv.innerHTML = '';
+        if (!data.invoices || data.invoices.length === 0) {
+          tbodyInv.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-3">Công ty chưa có hóa đơn phát hành nào.</td></tr>';
+        } else {
+          data.invoices.forEach(inv => {
+            let badgeClass = 'badge-sent';
+            let statusText = 'Chờ thanh toán';
+            if (inv.status === 'Paid') { badgeClass = 'badge-paid'; statusText = 'Đã thanh toán'; }
+            else if (inv.status === 'Partial') { badgeClass = 'badge-partial'; statusText = 'Đã trả một phần'; }
+            else if (inv.status === 'Overdue' || inv.overdueDays > 0) { badgeClass = 'badge-overdue'; statusText = `${inv.overdueDays} ngày quá hạn`; }
+
+            tbodyInv.innerHTML += `
+              <tr>
+                <td><strong>${inv.invoiceCode}</strong></td>
+                <td>${inv.issueDate}</td>
+                <td>${inv.dueDate}</td>
+                <td class="fw-bold">${formatMoney(inv.totalAmount)}</td>
+                <td class="text-success">${formatMoney(inv.paidAmount)}</td>
+                <td class="text-danger fw-bold">${formatMoney(inv.remainingAmount)}</td>
+                <td><span class="status-badge ${badgeClass}">${statusText}</span></td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary" onclick="viewInvoiceDetail(${inv.id})">
+                    <i class="fa-solid fa-file-lines me-1"></i>Xem & In
+                  </button>
+                </td>
+              </tr>
+            `;
+          });
+        }
+
+        // 2. Table Jobs
+        const tbodyJobs = document.getElementById('cpJobsTableBody');
+        tbodyJobs.innerHTML = '';
+        if (!data.jobs || data.jobs.length === 0) {
+          tbodyJobs.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-3">Chưa có vị trí tuyển dụng nào được đặt hàng.</td></tr>';
+        } else {
+          data.jobs.forEach(job => {
+            const isOpen = job.status === 'Opening';
+            tbodyJobs.innerHTML += `
+              <tr>
+                <td>#${job.id}</td>
+                <td><strong class="text-primary">${job.title}</strong></td>
+                <td>${job.department || 'Bộ phận Kỹ thuật'}</td>
+                <td>${job.salaryRange}</td>
+                <td>${job.feeRatePercent}%</td>
+                <td>
+                  <span class="badge ${isOpen ? 'bg-success' : 'bg-secondary'}">
+                    ${isOpen ? 'Đang Tuyển (Opening)' : 'Đã Đóng (Closed)'}
+                  </span>
+                </td>
+              </tr>
+            `;
+          });
+        }
+
+        // 3. Table Placements
+        const tbodyPlacements = document.getElementById('cpPlacementsTableBody');
+        tbodyPlacements.innerHTML = '';
+        if (!data.placements || data.placements.length === 0) {
+          tbodyPlacements.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-3">Chưa có ứng viên nào onboard cho công ty.</td></tr>';
+        } else {
+          data.placements.forEach(p => {
+            const isWarranty = p.status === 'UnderWarranty';
+            tbodyPlacements.innerHTML += `
+              <tr>
+                <td><strong>${p.Candidate ? p.Candidate.fullName : 'Ứng viên'}</strong><div class="text-muted small">${p.Candidate?.email || ''}</div></td>
+                <td>${p.Job ? p.Job.title : '-'}</td>
+                <td class="fw-bold">${formatMoney(p.officialSalary)}</td>
+                <td>${p.onboardDate}</td>
+                <td><span class="badge bg-light text-dark border">${p.warrantyDays} ngày</span></td>
+                <td>${p.warrantyEndDate || '-'}</td>
+                <td>
+                  <span class="badge ${isWarranty ? 'bg-warning text-dark' : 'bg-success'}">
+                    <i class="fa-solid ${isWarranty ? 'fa-clock' : 'fa-check'} me-1"></i>
+                    ${isWarranty ? 'Đang Bảo Hành' : 'Hoàn Thành'}
+                  </span>
+                </td>
+              </tr>
+            `;
+          });
+        }
+
+        // 4. Profile
+        document.getElementById('cpProfName').textContent = client.companyName;
+        document.getElementById('cpProfTaxCode').textContent = client.taxCode;
+        document.getElementById('cpProfAddress').textContent = client.address || 'Chưa cập nhật';
+        document.getElementById('cpProfPerson').textContent = client.contactPerson || '-';
+        document.getElementById('cpProfEmail').textContent = client.contactEmail || '-';
+        document.getElementById('cpProfPhone').textContent = client.contactPhone || '-';
+        document.getElementById('cpProfNetDays').textContent = `Net ${client.paymentTermDays} ngày kể từ ngày xuất HĐ VAT`;
+        document.getElementById('cpProfStatus').textContent = `${client.status} (Hợp đồng nguyên tắc có hiệu lực)`;
+
+      } catch (err) {
+        console.error('Lỗi tải Cổng khách hàng:', err);
+      }
+    }
+
+    function openClientRequestJobModal() {
+      document.getElementById('formClientRequestJob').reset();
+      new bootstrap.Modal(document.getElementById('modalClientRequestJob')).show();
+    }
+
+    async function submitClientRequestJob(e) {
+      e.preventDefault();
+      const body = {
+        clientId: currentClientId,
+        title: document.getElementById('cpJobTitle').value,
+        department: document.getElementById('cpJobDepartment').value,
+        salaryRange: document.getElementById('cpJobSalary').value || 'Thỏa thuận',
+        feeRatePercent: 18.0
+      };
+
+      try {
+        const res = await fetch('/api/recruitment/jobs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (data.success) {
+          bootstrap.Modal.getInstance(document.getElementById('modalClientRequestJob')).hide();
+          alert('Gửi yêu cầu tuyển dụng mới thành công! GODDY Recruit đã tiếp nhận và sẽ sớm liên hệ.');
+          loadClientPortal(currentClientId);
+        } else {
+          alert(data.message || 'Lỗi gửi yêu cầu!');
+        }
+      } catch (err) {
+        alert('Lỗi kết nối máy chủ!');
+      }
+    }
+
+    function openLoginModal() {
+      new bootstrap.Modal(document.getElementById('modalLogin')).show();
+    }
+
+    function quickFillLogin(username, password) {
+      document.getElementById('loginUsername').value = username;
+      document.getElementById('loginPassword').value = password;
+    }
+
+    async function submitLogin(e) {
+      e.preventDefault();
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (data.success) {
+          bootstrap.Modal.getInstance(document.getElementById('modalLogin')).hide();
+          alert(`Đăng nhập thành công với vai trò: ${data.user.role.toUpperCase()}`);
+          if (data.user.role === 'client') {
+            switchUserRole('client', data.user.clientId || 1);
+          } else {
+            switchUserRole(data.user.role);
+          }
+        } else {
+          alert(data.message || 'Đăng nhập thất bại!');
+        }
+      } catch (err) {
+        alert('Lỗi kết nối máy chủ!');
+      }
+    }
+
+    // Khởi tạo Dashboard hoặc Cổng Khách Hàng khi trang load xong
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const roleParam = urlParams.get('role');
+      const clientParam = parseInt(urlParams.get('clientId')) || 1;
+
+      if (roleParam === 'client') {
+        switchUserRole('client', clientParam);
+      } else if (roleParam === 'accountant' || roleParam === 'ketoan') {
+        switchUserRole('accountant');
+      } else if (roleParam === 'recruiter') {
+        switchUserRole('recruiter');
+      } else {
+        loadDashboard();
+      }
+    });
+  </script>
+</body>
+</html>

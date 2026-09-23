@@ -1,6 +1,6 @@
 ﻿const { AuditLog, User } = require('../models');
 
-// Lấy lịch sử thao tác hệ thống (Audit Trail)
+// Lay lich su thao tac he thong (Audit Trail)
 exports.getAuditLogs = async (req, res) => {
   try {
     const logs = await AuditLog.findAll({

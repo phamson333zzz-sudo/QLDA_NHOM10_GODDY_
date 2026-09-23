@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nhật Ký Kiểm Toán Hệ Thống - GODDY RECRUIT</title>
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+  <!-- Custom Modular CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo-icon" id="sidebarLogoIcon"><i class="fa-solid fa-chart-pie"></i></div>
+      <div>
+        <div class="sidebar-title" id="sidebarMainTitle">GODDY RECRUIT</div>
+        <div class="sidebar-subtitle" id="sidebarSubTitle">Quản Lý Công Nợ B2B</div>
+      </div>
+    </div>
+
+    <!-- Menu Nội bộ (Admin, Kế toán, Recruiter) -->
+    <ul class="sidebar-menu" id="sidebarMenuInternal">
+      <li class="sidebar-item" onclick="switchTab('dashboard')">
+        <i class="fa-solid fa-gauge-high"></i> Dashboard Thống Kê
+      </li>
+      <li class="sidebar-item" onclick="switchTab('clients')">
+        <i class="fa-solid fa-building-user"></i> Khách Hàng Doanh Nghiệp
+      </li>
+      <li class="sidebar-item" onclick="switchTab('recruitment')">
+        <i class="fa-solid fa-briefcase"></i> Tuyển Dụng & Deal Onboard
+      </li>
+      <li class="sidebar-item" onclick="switchTab('invoices')">
+        <i class="fa-solid fa-file-invoice-dollar"></i> Hóa Đơn & Invoicing
+      </li>
+      <li class="sidebar-item" onclick="switchTab('debt')">
+        <i class="fa-solid fa-scale-unbalanced"></i> Công Nợ & Tuổi Nợ (Aging)
+      </li>
+      <li class="sidebar-item active" onclick="switchTab('audit')">
+        <i class="fa-solid fa-clock-rotate-left"></i> Nhật Ký Audit Log
+      </li>
+    </ul>
+
+    <!-- Menu Cổng Khách Hàng (Client Portal) -->
+    <ul class="sidebar-menu" id="sidebarMenuClient" style="display: none;">
+      <li class="sidebar-item active" onclick="switchClientSubTab('invoices')">
+        <i class="fa-solid fa-file-invoice-dollar"></i> Hóa Đơn & Thanh Toán
+      </li>
+      <li class="sidebar-item" onclick="switchClientSubTab('jobs')">
+        <i class="fa-solid fa-briefcase"></i> Vị Trí Tuyển Dụng
+      </li>
+      <li class="sidebar-item" onclick="switchClientSubTab('placements')">
+        <i class="fa-solid fa-user-check"></i> Ứng Viên & Bảo Hành (60d)
+      </li>
+      <li class="sidebar-item" onclick="switchClientSubTab('profile')">
+        <i class="fa-solid fa-id-card"></i> Hồ Sơ Doanh Nghiệp
+      </li>
+    </ul>
+
+    <div class="sidebar-footer" id="sidebarFooter">
+      <div id="sidebarFooterInternal">
+        <div><strong>Đồ án QLDA - Nhóm 10</strong></div>
+        <div class="text-muted" style="font-size: 11px;">Phiên bản 1.0.0 (SQLite Enterprise)</div>
+      </div>
+      <div id="sidebarFooterClient" style="display: none;">
+        <button class="btn btn-sm btn-outline-light w-100 mb-2" onclick="switchUserRole('admin')">
+          <i class="fa-solid fa-arrow-left me-1"></i> Về quyền Quản trị
+        </button>
+        <div class="text-muted text-center" style="font-size: 11px;">Chế độ Cổng Khách Hàng B2B</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+    <header class="top-navbar">
+      <h1 class="page-title" id="pageHeaderTitle">Nhật Ký Thao Tác Hệ Thống (Audit Trail)</h1>
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-outline-secondary" onclick="reloadCurrentTab()" title="Làm mới dữ liệu">
+          <i class="fa-solid fa-rotate me-1"></i> Làm mới
+        </button>
+
+        <!-- Dropdown Chuyển Đổi Quyền / Tài Khoản -->
+        <div class="dropdown">
+          <button class="role-dropdown-btn dropdown-toggle" type="button" id="roleDropdownBtn" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="badge bg-danger rounded-pill px-2 py-1" id="roleBadge">Admin</span>
+            <span id="navRoleTitle">Huỳnh Nguyễn Vĩnh Phúc</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 py-2" style="min-width: 320px; border-radius: 14px;">
+            <li class="dropdown-header text-uppercase fw-bold text-muted small"><i class="fa-solid fa-users me-1"></i> Tài Khoản Nội Bộ</li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:void(0)" onclick="switchUserRole('admin')">
+                <span class="badge bg-danger rounded-pill">Admin</span>
+                <div>
+                  <div class="fw-bold small">Huỳnh Nguyễn Vĩnh Phúc</div>
+                  <div class="text-muted" style="font-size: 11px;">Toàn quyền hệ thống & Giám sát</div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:void(0)" onclick="switchUserRole('accountant')">
+                <span class="badge bg-success rounded-pill">Kế toán</span>
+                <div>
+                  <div class="fw-bold small">Phạm Sơn (Kế toán trưởng)</div>
+                  <div class="text-muted" style="font-size: 11px;">Hóa đơn, Công nợ, Ghi nhận thu tiền</div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:void(0)" onclick="switchUserRole('recruiter')">
+                <span class="badge bg-warning text-dark rounded-pill">Recruiter</span>
+                <div>
+                  <div class="fw-bold small">Nguyễn Văn Minh (Senior)</div>
+                  <div class="text-muted" style="font-size: 11px;">Quản lý ứng viên & Deal onboard</div>
+                </div>
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li class="dropdown-header text-uppercase fw-bold text-primary small"><i class="fa-solid fa-building me-1"></i> Cổng Khách Hàng (Client Portal)</li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:void(0)" onclick="switchUserRole('client', 1)">
+                <span class="badge bg-primary rounded-pill">Khách hàng</span>
+                <div>
+                  <div class="fw-bold small">FPT Software (Trần Thu Hà)</div>
+                  <div class="text-muted" style="font-size: 11px;">Tài khoản: fpt_client (Net 30)</div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:void(0)" onclick="switchUserRole('client', 2)">
+                <span class="badge bg-primary rounded-pill">Khách hàng</span>
+                <div>
+                  <div class="fw-bold small">VNG Corporation (Nguyễn Hoàng Long)</div>
+                  <div class="text-muted" style="font-size: 11px;">Tài khoản: vng_client (Net 30)</div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:void(0)" onclick="switchUserRole('client', 3)">
+                <span class="badge bg-primary rounded-pill">Khách hàng</span>
+                <div>
+                  <div class="fw-bold small">Shopee Việt Nam (Lê Thùy Dương)</div>
+                  <div class="text-muted" style="font-size: 11px;">Tài khoản: shopee_client (Net 45)</div>
+                </div>
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item text-center text-primary fw-bold small py-2" href="javascript:void(0)" onclick="openLoginModal()">
+                <i class="fa-solid fa-right-to-bracket me-1"></i> Đăng nhập bằng tài khoản khác...
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main class="content-container">
+<div id="section-audit" style="display: block;" style="display: block;">
+        <div class="table-box mt-0">
+          <div class="box-header">
+            <h3 class="box-title"><i class="fa-solid fa-shield-halved text-primary me-2"></i>Nhật Ký Thao Tác Hệ Thống (Audit Trail)</h3>
+            <button class="btn btn-sm btn-outline-secondary" onclick="loadAudit()"><i class="fa-solid fa-rotate me-1"></i>Tải lại</button>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-sm table-hover">
+              <thead>
+                <tr>
+                  <th>Thời Gian</th>
+                  <th>Hành Động</th>
+                  <th>Phân Hệ</th>
+                  <th>Chi Tiết Ghi Nhận</th>
+                </tr>
+              </thead>
+              <tbody id="auditTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SECTION 7: CỔNG THÔNG TIN KHÁCH HÀNG (CLIENT PORTAL) ================= -->
+      
+    </main>
+  </div>
+
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof loadAudit === 'function') loadAudit();
+    });
+  </script>
