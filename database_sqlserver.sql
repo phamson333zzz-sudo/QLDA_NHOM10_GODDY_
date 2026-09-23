@@ -25,3 +25,20 @@ CREATE TABLE dbo.Users (
     updatedAt DATETIME2 DEFAULT GETDATE()
 );
 GO
+
+-- 2. BẢNG KHÁCH HÀNG DOANH NGHIỆP B2B (CLIENTS)
+IF OBJECT_ID('dbo.Clients', 'U') IS NOT NULL DROP TABLE dbo.Clients;
+CREATE TABLE dbo.Clients (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    companyName NVARCHAR(200) NOT NULL,
+    taxCode NVARCHAR(50) NOT NULL UNIQUE,
+    address NVARCHAR(255) NULL,
+    contactPerson NVARCHAR(100) NULL,
+    contactEmail NVARCHAR(100) NULL,
+    contactPhone NVARCHAR(20) NULL,
+    paymentTermDays INT DEFAULT 30, -- Net 15, Net 30, Net 45, Net 60
+    status NVARCHAR(50) DEFAULT 'Active',
+    createdAt DATETIME2 DEFAULT GETDATE(),
+    updatedAt DATETIME2 DEFAULT GETDATE()
+);
+GO
