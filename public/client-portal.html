@@ -19,7 +19,6 @@
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <style>
   <!-- Custom Modular CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -792,15 +791,13 @@
   <script src="js/debt.js"></script>
   <script src="js/audit.js"></script>
   <script src="js/client-portal.js"></script>
-</body>
-</html>
-    </main>
-  </div>
-
-
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      if (typeof loadClientPortal === 'function') loadClientPortal();
+      const urlParams = new URLSearchParams(window.location.search);
+      const cId = parseInt(urlParams.get('clientId')) || 1;
+      if (typeof switchUserRole === 'function') switchUserRole('client', cId);
     });
   </script>
+</body>
+</html>

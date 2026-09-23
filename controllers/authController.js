@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { User, AuditLog } = require('../models');
+const { Op } = require('sequelize');
 
 // Đăng nhập hệ thống
 exports.login = async (req, res) => {
@@ -10,7 +11,14 @@ exports.login = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Vui lòng nhập tên tài khoản và mật khẩu!' });
     }
 
-    const user = await User.findOne({ where: { username: username.trim() } });
+    const user = await User.findOne({
+      where: {
+        [Op.or]: [
+          { username: username.trim() },
+          { email: username.trim() }
+        ]
+      }
+    });
     if (!user || !user.isActive) {
       return res.status(401).json({ success: false, message: 'Tài khoản không tồn tại hoặc đã bị vô hiệu hóa!' });
     }

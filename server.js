@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
@@ -15,16 +15,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Thiết lập mã hóa UTF-8 cho toàn bộ response
-app.use((req, res, next) => {
-  res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  next();
-});
-
-// Phục vụ file tĩnh (Frontend Dashboard)
+// Phục vụ file tĩnh (Frontend Dashboard & Assets với MIME type chuẩn)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Khai báo các Router API cho 8 Module
+// Khai báo các Router API cho các phân hệ
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/clients', require('./routes/clientRoutes'));
 app.use('/api/recruitment', require('./routes/recruitmentRoutes'));

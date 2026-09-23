@@ -19,7 +19,6 @@
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <style>
   <!-- Custom Modular CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -59,7 +58,7 @@
 
     <!-- Menu Cổng Khách Hàng (Client Portal) -->
     <ul class="sidebar-menu" id="sidebarMenuClient" style="display: none;">
-      <li class="sidebar-item active" onclick="switchClientSubTab('invoices')">
+      <li class="sidebar-item" onclick="switchClientSubTab('invoices')">
         <i class="fa-solid fa-file-invoice-dollar"></i> Hóa Đơn & Thanh Toán
       </li>
       <li class="sidebar-item" onclick="switchClientSubTab('jobs')">
@@ -208,10 +207,380 @@
     </main>
   </div>
 
+  <!-- ================= MODAL: THÊM KHÁCH HÀNG B2B ================= -->
+  <div class="modal fade" id="modalAddClient" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-building me-2 text-primary"></i>Thêm Khách Hàng Doanh Nghiệp Mới</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="formAddClient" onsubmit="submitAddClient(event)">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Tên công ty / Doanh nghiệp (*)</label>
+              <input type="text" class="form-control" id="newClientName" required placeholder="Ví dụ: Công ty Cổ phần Công nghệ ABC">
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Mã số thuế (*)</label>
+                <input type="text" class="form-control" id="newClientTaxCode" required placeholder="10 hoặc 13 số">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Điều khoản thanh toán</label>
+                <select class="form-select" id="newClientNetDays">
+                  <option value="15">Net 15 ngày</option>
+                  <option value="30" selected>Net 30 ngày (Tiêu chuẩn)</option>
+                  <option value="45">Net 45 ngày</option>
+                  <option value="60">Net 60 ngày</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Địa chỉ trụ sở</label>
+              <input type="text" class="form-control" id="newClientAddress" placeholder="Quận / Thành phố...">
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Người liên hệ</label>
+                <input type="text" class="form-control" id="newClientContactPerson" placeholder="Họ và tên nhân sự">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Số điện thoại</label>
+                <input type="text" class="form-control" id="newClientContactPhone" placeholder="090...">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Email liên hệ nhận hóa đơn</label>
+              <input type="email" class="form-control" id="newClientContactEmail" placeholder="ketoan@doanhnghiep.com">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save me-1"></i>Lưu Khách Hàng</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
+  <!-- ================= MODAL: CHỐT DEAL TUYỂN DỤNG ================= -->
+  <div class="modal fade" id="modalAddPlacement" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-handshake me-2 text-success"></i>Ghi Nhận Deal Tuyển Dụng Mới (Onboard)</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="formAddPlacement" onsubmit="submitAddPlacement(event)">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Khách hàng (Doanh nghiệp) (*)</label>
+              <select class="form-select" id="placementClientId" required onchange="onSelectClientForPlacement()">
+                <option value="">-- Chọn khách hàng --</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Vị trí tuyển dụng (Job) (*)</label>
+              <select class="form-select" id="placementJobId" required>
+                <option value="">-- Chọn vị trí tuyển dụng --</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Ứng viên (*)</label>
+              <select class="form-select" id="placementCandidateId" required>
+                <option value="">-- Chọn ứng viên --</option>
+              </select>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Mức lương thỏa thuận (VNĐ) (*)</label>
+                <input type="number" class="form-control" id="placementSalary" required placeholder="Ví dụ: 40000000" oninput="calcPlacementFee()">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Tỷ lệ phí dịch vụ (%)</label>
+                <input type="number" class="form-control" id="placementFeeRate" value="18" step="0.5" oninput="calcPlacementFee()">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Phí dịch vụ ước tính (VNĐ)</label>
+              <input type="text" class="form-control fw-bold text-success bg-light" id="placementEstFee" readonly value="0 đ">
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Ngày ứng viên Onboard (*)</label>
+                <input type="date" class="form-control" id="placementOnboardDate" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Thời hạn bảo hành (Ngày)</label>
+                <input type="number" class="form-control" id="placementWarrantyDays" value="60">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-check me-1"></i>Chốt Deal</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: GHI NHẬN THANH TOÁN (TRẢ NỢ) ================= -->
+  <div class="modal fade" id="modalRecordPayment" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-money-bill-wave me-2 text-success"></i>Ghi Nhận Thanh Toán Công Nợ</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="formRecordPayment" onsubmit="submitRecordPayment(event)">
+          <div class="modal-body">
+            <input type="hidden" id="payInvoiceId">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Hóa đơn thanh toán</label>
+              <input type="text" class="form-control bg-light" id="payInvoiceCode" readonly>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Số tiền nợ còn lại</label>
+              <input type="text" class="form-control bg-light fw-bold text-danger" id="payRemainingText" readonly>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Số tiền khách hàng thanh toán (VNĐ) (*)</label>
+              <input type="number" class="form-control" id="payAmount" required placeholder="Nhập số tiền trả">
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Phương thức thanh toán</label>
+                <select class="form-select" id="payMethod">
+                  <option value="BankTransfer">Chuyển khoản ngân hàng</option>
+                  <option value="Cash">Tiền mặt</option>
+                  <option value="CreditCard">Thẻ tín dụng doanh nghiệp</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Mã tham chiếu / Ủy nhiệm chi</label>
+                <input type="text" class="form-control" id="payRefCode" placeholder="FT...">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Ghi chú</label>
+              <textarea class="form-control" id="payNotes" rows="2" placeholder="Ví dụ: Đã nhận tiền từ tài khoản Techcombank"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-circle-check me-1"></i>Xác Nhận Thu Tiền</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: XEM & IN HÓA ĐƠN PDF ================= -->
+  <div class="modal fade" id="modalInvoiceDetail" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-file-invoice me-2 text-primary"></i>Hóa Đơn Giá Trị Gia Tăng (VAT)</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="invoice-print-sheet" id="invoicePrintSheet">
+            <div class="d-flex justify-content-between align-items-start border-bottom pb-3 mb-4">
+              <div>
+                <h4 class="fw-bold text-primary mb-1">GODDY RECRUITMENT SERVICES</h4>
+                <div class="text-muted small">Cung cấp dịch vụ Tuyển dụng & Headhunting cao cấp</div>
+                <div class="text-muted small">Địa chỉ: Tòa nhà TechHub, Cầu Giấy, Hà Nội</div>
+                <div class="text-muted small">Mã số thuế: 0109988776</div>
+              </div>
+              <div class="text-end">
+                <h3 class="fw-bold mb-1" id="invDetailCode">INV-2026-0001</h3>
+                <div class="text-muted small">Ngày lập: <span id="invDetailIssueDate">--</span></div>
+                <div class="text-danger small fw-bold">Hạn thanh toán: <span id="invDetailDueDate">--</span></div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-6">
+                <div class="text-muted small text-uppercase fw-bold">Khách hàng (Người mua)</div>
+                <h5 class="fw-bold mb-1" id="invDetailClientName">Công ty Cổ phần FPT Software</h5>
+                <div class="small">Mã số thuế: <strong id="invDetailTaxCode">--</strong></div>
+                <div class="small text-muted" id="invDetailAddress">--</div>
+              </div>
+              <div class="col-6 text-end">
+                <div class="text-muted small text-uppercase fw-bold">Trạng thái thanh toán</div>
+                <div id="invDetailStatusBadge" class="mt-1"></div>
+              </div>
+            </div>
+
+            <table class="table table-bordered mb-4">
+              <thead class="table-light">
+                <tr>
+                  <th>Nội Dung Dịch Vụ</th>
+                  <th>Ứng Viên / Vị Trí</th>
+                  <th class="text-end">Thành Tiền (VNĐ)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Phí dịch vụ Headhunt tuyển dụng nhân sự chính thức</td>
+                  <td id="invDetailPlacementInfo">Senior NodeJS Engineer</td>
+                  <td class="text-end fw-bold" id="invDetailSubtotal">0 đ</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2" class="text-end text-muted">Cộng tiền dịch vụ:</td>
+                  <td class="text-end fw-bold" id="invDetailSubtotalFoot">0 đ</td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="text-end text-muted">Thuế suất GTGT (VAT 8%):</td>
+                  <td class="text-end text-muted" id="invDetailVat">0 đ</td>
+                </tr>
+                <tr class="table-light">
+                  <td colspan="2" class="text-end fw-bold fs-6">TỔNG CỘNG THANH TOÁN:</td>
+                  <td class="text-end fw-bold text-primary fs-5" id="invDetailTotal">0 đ</td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="text-end text-success">Đã thanh toán:</td>
+                  <td class="text-end text-success fw-bold" id="invDetailPaid">0 đ</td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="text-end text-danger fw-bold">CÒN PHẢI THU:</td>
+                  <td class="text-end text-danger fw-bold fs-6" id="invDetailRemaining">0 đ</td>
+                </tr>
+              </tfoot>
+            </table>
+
+            <div class="row pt-4 text-center">
+              <div class="col-6">
+                <div class="fw-bold">Đại Diện Khách Hàng</div>
+                <div class="text-muted small mt-1">(Ký, ghi rõ họ tên)</div>
+              </div>
+              <div class="col-6">
+                <div class="fw-bold">Đại Diện GODDY Recruit</div>
+                <div class="text-muted small mt-1">(Ký, đóng dấu điện tử)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-primary" onclick="window.print()">
+            <i class="fa-solid fa-print me-1"></i>In / Xuất PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: KHÁCH HÀNG GỬI YÊU CẦU TUYỂN DỤNG ================= -->
+  <div class="modal fade" id="modalClientRequestJob" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-paper-plane me-2 text-primary"></i>Gửi Yêu Cầu Tuyển Dụng Mới</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="formClientRequestJob" onsubmit="submitClientRequestJob(event)">
+          <div class="modal-body">
+            <div class="alert alert-primary py-2 px-3 small border-0 bg-primary-subtle text-primary-emphasis mb-3">
+              Yêu cầu của bạn sẽ được chuyển trực tiếp tới đội ngũ Headhunter của GODDY Recruit để bắt đầu săn nhân sự.
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Chức danh / Vị trí tuyển dụng (*)</label>
+              <input type="text" class="form-control" id="cpJobTitle" required placeholder="Ví dụ: Senior Data Engineer, Trưởng phòng Marketing...">
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Khối / Phòng ban (*)</label>
+              <input type="text" class="form-control" id="cpJobDepartment" required placeholder="Ví dụ: Khối Công nghệ thông tin, Ban Tài chính...">
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Dải lương dự kiến (Gross)</label>
+              <input type="text" class="form-control" id="cpJobSalary" placeholder="Ví dụ: 30 - 45 triệu VND, Thỏa thuận theo năng lực...">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check me-1"></i>Gửi Yêu Cầu Cho GODDY</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ĐĂNG NHẬP HỆ THỐNG ================= -->
+  <div class="modal fade" id="modalLogin" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+        <div class="modal-header border-0 pb-0">
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body px-4 pt-0 pb-4">
+          <div class="text-center mb-4">
+            <div class="sidebar-logo-icon mx-auto mb-2" style="width: 50px; height: 50px; font-size: 24px;">
+              <i class="fa-solid fa-lock"></i>
+            </div>
+            <h4 class="fw-bold">Đăng Nhập Hệ Thống</h4>
+            <div class="text-muted small">GODDY Recruit - Quản trị Tài chính Tuyển dụng</div>
+          </div>
+
+          <form id="formLogin" onsubmit="submitLogin(event)">
+            <div class="mb-3">
+              <label class="form-label fw-bold small">Tên đăng nhập</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-user text-muted"></i></span>
+                <input type="text" class="form-control border-start-0" id="loginUsername" required placeholder="admin / ketoan / recruiter / fpt_client">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold small">Mật khẩu</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-key text-muted"></i></span>
+                <input type="password" class="form-control border-start-0" id="loginPassword" required value="123456">
+              </div>
+              <div class="form-text small">Mật khẩu mặc định cho tất cả tài khoản: <code>123456</code></div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm mt-3" style="border-radius: 12px;">
+              <i class="fa-solid fa-right-to-bracket me-1"></i> Đăng Nhập
+            </button>
+          </form>
+
+          <div class="mt-4 pt-3 border-top">
+            <div class="small fw-bold text-muted mb-2 text-center">Hoặc chọn nhanh tài khoản thử nghiệm:</div>
+            <div class="d-flex flex-wrap gap-1 justify-content-center">
+              <button class="btn btn-sm btn-outline-danger" onclick="quickFillLogin('admin', '123456')">Admin</button>
+              <button class="btn btn-sm btn-outline-success" onclick="quickFillLogin('ketoan', '123456')">Kế toán</button>
+              <button class="btn btn-sm btn-outline-warning text-dark" onclick="quickFillLogin('recruiter', '123456')">Recruiter</button>
+              <button class="btn btn-sm btn-outline-primary" onclick="quickFillLogin('fpt_client', '123456')">FPT Software</button>
+              <button class="btn btn-sm btn-outline-primary" onclick="quickFillLogin('vng_client', '123456')">VNG</button>
+              <button class="btn btn-sm btn-outline-primary" onclick="quickFillLogin('shopee_client', '123456')">Shopee</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- APP LOGIC SCRIPT -->
+  <!-- Modular JS Files for Each Feature -->
+  <script src="js/common.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/clients.js"></script>
+  <script src="js/recruitment.js"></script>
+  <script src="js/invoices.js"></script>
+  <script src="js/debt.js"></script>
+  <script src="js/audit.js"></script>
+  <script src="js/client-portal.js"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (typeof loadPlacements === 'function') loadPlacements();
     });
   </script>
+</body>
+</html>
