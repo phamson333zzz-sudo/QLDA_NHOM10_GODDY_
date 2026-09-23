@@ -9,3 +9,19 @@ GO
 
 USE QLDA_NHOM10_GODDY;
 GO
+
+-- 1. BẢNG NGƯỜI DÙNG (USERS)
+IF OBJECT_ID('dbo.Users', 'U') IS NOT NULL DROP TABLE dbo.Users;
+CREATE TABLE dbo.Users (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    username NVARCHAR(50) NOT NULL UNIQUE,
+    email NVARCHAR(100) NOT NULL UNIQUE,
+    password NVARCHAR(255) NOT NULL,
+    fullName NVARCHAR(100) NOT NULL,
+    role NVARCHAR(20) DEFAULT 'recruiter', -- 'admin', 'accountant', 'recruiter'
+    avatar NVARCHAR(MAX) NULL,
+    isActive BIT DEFAULT 1,
+    createdAt DATETIME2 DEFAULT GETDATE(),
+    updatedAt DATETIME2 DEFAULT GETDATE()
+);
+GO
