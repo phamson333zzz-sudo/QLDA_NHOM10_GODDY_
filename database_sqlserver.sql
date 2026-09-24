@@ -95,3 +95,26 @@ CREATE TABLE dbo.Placements (
     CONSTRAINT FK_Placements_Users FOREIGN KEY (recruiterId) REFERENCES dbo.Users(id)
 );
 GO
+
+-- 6. BẢNG HÓA ĐƠN DỊCH VỤ & CÔNG NỢ (INVOICES)
+IF OBJECT_ID('dbo.Invoices', 'U') IS NOT NULL DROP TABLE dbo.Invoices;
+CREATE TABLE dbo.Invoices (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    invoiceCode NVARCHAR(50) NOT NULL UNIQUE,
+    clientId INT NOT NULL,
+    placementId INT NULL,
+    subtotal DECIMAL(15,2) NOT NULL,
+    vatRate FLOAT DEFAULT 8.0,
+    vatAmount DECIMAL(15,2) DEFAULT 0,
+    totalAmount DECIMAL(15,2) NOT NULL,
+    paidAmount DECIMAL(15,2) DEFAULT 0,
+    remainingAmount DECIMAL(15,2) NOT NULL,
+    issueDate DATE NOT NULL,
+    dueDate DATE NOT NULL,
+    status NVARCHAR(50) DEFAULT 'Sent', -- 'Sent', 'Partial', 'Paid', 'Overdue', 'Cancelled'
+    createdAt DATETIME2 DEFAULT GETDATE(),
+    updatedAt DATETIME2 DEFAULT GETDATE(),
+    CONSTRAINT FK_Invoices_Clients FOREIGN KEY (clientId) REFERENCES dbo.Clients(id),
+    CONSTRAINT FK_Invoices_Placements FOREIGN KEY (placementId) REFERENCES dbo.Placements(id)
+);
+GO
