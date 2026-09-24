@@ -58,3 +58,17 @@ CREATE TABLE dbo.Jobs (
     CONSTRAINT FK_Jobs_Clients FOREIGN KEY (clientId) REFERENCES dbo.Clients(id) ON DELETE CASCADE
 );
 GO
+
+-- 4. BẢNG ỨNG VIÊN (CANDIDATES)
+IF OBJECT_ID('dbo.Candidates', 'U') IS NOT NULL DROP TABLE dbo.Candidates;
+CREATE TABLE dbo.Candidates (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    fullName NVARCHAR(100) NOT NULL,
+    email NVARCHAR(100) NOT NULL,
+    phone NVARCHAR(20) NULL,
+    currentPosition NVARCHAR(100) NULL,
+    status NVARCHAR(50) DEFAULT 'Available', -- 'Available', 'Interviewing', 'Placed'
+    createdAt DATETIME2 DEFAULT GETDATE(),
+    updatedAt DATETIME2 DEFAULT GETDATE()
+);
+GO
