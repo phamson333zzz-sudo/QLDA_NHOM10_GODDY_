@@ -13,7 +13,7 @@
 
 ---
 
-##  CÁC TÍNH NĂNG CỐT LÕI (8 MODULES)
+## CÁC TÍNH NĂNG CỐT LÕI (8 MODULES)
 1. **Module 1: CSDL & Kiến Trúc Dự Án**: CSDL SQLite zero-config, Sequelize ORM với 8 bảng quan hệ chặt chẽ.
 2. **Module 2: Xác Thực & Phân Quyền (RBAC)**: Bảo mật JWT, mã hóa bcrypt, phân quyền Admin, Kế toán, Recruiter.
 3. **Module 3: Khách Hàng Doanh Nghiệp B2B**: Quản lý hồ sơ công ty, mã số thuế, điều khoản Net Days (15/30/45/60 ngày).
@@ -45,5 +45,5 @@ npm test
 
 ---
 
-##  QUẢN LÝ TIẾN ĐỘ & TASK: huynhnguyenvinhphuc
+## QUẢN LÝ TIẾN ĐỘ & TASK: huynhnguyenvinhphuc
 
