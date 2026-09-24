@@ -147,3 +147,13 @@ CREATE TABLE dbo.AuditLogs (
     updatedAt DATETIME2 DEFAULT GETDATE()
 );
 GO
+
+-- CHỈ MỤC INDEX TỐI ƯU TỐC ĐỘ TRUY VẤN
+CREATE INDEX IX_Invoices_DueDate ON dbo.Invoices(dueDate);
+CREATE INDEX IX_Invoices_Status ON dbo.Invoices(status);
+CREATE INDEX IX_Clients_TaxCode ON dbo.Clients(taxCode);
+CREATE INDEX IX_Placements_OnboardDate ON dbo.Placements(onboardDate);
+GO
+
+PRINT N'>>> ĐÃ KHỞI TẠO BẢNG CƠ SỞ DỮ LIỆU SQL SERVER THÀNH CÔNG! <<<';
+GO
