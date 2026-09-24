@@ -134,3 +134,16 @@ CREATE TABLE dbo.Payments (
     CONSTRAINT FK_Payments_Invoices FOREIGN KEY (invoiceId) REFERENCES dbo.Invoices(id) ON DELETE CASCADE
 );
 GO
+
+-- 8. BẢNG NHẬT KÝ HỆ THỐNG (AUDIT LOGS)
+IF OBJECT_ID('dbo.AuditLogs', 'U') IS NOT NULL DROP TABLE dbo.AuditLogs;
+CREATE TABLE dbo.AuditLogs (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    userId INT NULL,
+    action NVARCHAR(100) NOT NULL,
+    module NVARCHAR(50) NOT NULL,
+    details NVARCHAR(MAX) NULL,
+    createdAt DATETIME2 DEFAULT GETDATE(),
+    updatedAt DATETIME2 DEFAULT GETDATE()
+);
+GO
