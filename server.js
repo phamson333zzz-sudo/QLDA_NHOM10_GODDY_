@@ -36,3 +36,23 @@ app.get('/', (req, res) => {
 app.use('/api/*', (req, res) => {
   res.status(404).json({ success: false, message: 'Đường dẫn API không tồn tại!' });
 });
+
+// Khởi chạy máy chủ và đồng bộ CSDL SQLite
+async function startServer() {
+  try {
+    await sequelize.authenticate();
+    console.log('[Database] Kết nối cơ sở dữ liệu SQLite thành công!');
+
+    // Khởi tạo bảng và nạp dữ liệu mẫu
+    await seedData();
+
+    app.listen(PORT, () => {
+      console.log('===============================================================');
+      console.log(` GODDY RECRUIT - Quản lý Hóa đơn, Công nợ & Tuyển dụng (Nhóm 10)`);
+      console.log(` Máy chủ đang chạy tại: http://localhost:${PORT}`);
+      console.log('===============================================================');
+    });
+  } catch (err) {
+    console.error('[Error] Không thể khởi động máy chủ:', err);
+  }
+}
