@@ -25,7 +25,7 @@
 
 ---
 
-## 🛠 HƯỚNG DẪN CÀI ĐẶT & CHẠY DỰ ÁN
+## HƯỚNG DẪN CÀI ĐẶT & CHẠY DỰ ÁN
 
 ### 1. Cài đặt thư viện:
 ```bash
