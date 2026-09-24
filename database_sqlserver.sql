@@ -118,3 +118,19 @@ CREATE TABLE dbo.Invoices (
     CONSTRAINT FK_Invoices_Placements FOREIGN KEY (placementId) REFERENCES dbo.Placements(id)
 );
 GO
+
+-- 7. BẢNG LỊCH SỬ THANH TOÁN (PAYMENTS)
+IF OBJECT_ID('dbo.Payments', 'U') IS NOT NULL DROP TABLE dbo.Payments;
+CREATE TABLE dbo.Payments (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    invoiceId INT NOT NULL,
+    amount DECIMAL(15,2) NOT NULL,
+    paymentDate DATE NOT NULL,
+    paymentMethod NVARCHAR(50) DEFAULT 'BankTransfer',
+    referenceCode NVARCHAR(100) NULL,
+    notes NVARCHAR(MAX) NULL,
+    createdAt DATETIME2 DEFAULT GETDATE(),
+    updatedAt DATETIME2 DEFAULT GETDATE(),
+    CONSTRAINT FK_Payments_Invoices FOREIGN KEY (invoiceId) REFERENCES dbo.Invoices(id) ON DELETE CASCADE
+);
+GO
