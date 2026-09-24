@@ -42,3 +42,19 @@ CREATE TABLE dbo.Clients (
     updatedAt DATETIME2 DEFAULT GETDATE()
 );
 GO
+
+-- 3. BẢNG VỊ TRÍ TUYỂN DỤNG (JOBS)
+IF OBJECT_ID('dbo.Jobs', 'U') IS NOT NULL DROP TABLE dbo.Jobs;
+CREATE TABLE dbo.Jobs (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    clientId INT NOT NULL,
+    title NVARCHAR(150) NOT NULL,
+    department NVARCHAR(100) NULL,
+    salaryRange NVARCHAR(100) NULL,
+    feeRatePercent FLOAT DEFAULT 18.0,
+    status NVARCHAR(50) DEFAULT 'Opening',
+    createdAt DATETIME2 DEFAULT GETDATE(),
+    updatedAt DATETIME2 DEFAULT GETDATE(),
+    CONSTRAINT FK_Jobs_Clients FOREIGN KEY (clientId) REFERENCES dbo.Clients(id) ON DELETE CASCADE
+);
+GO
