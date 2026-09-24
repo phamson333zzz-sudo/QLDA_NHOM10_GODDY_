@@ -1,7 +1,5 @@
 # QLDA_NHOM10_GODDY - PHẦN MỀM QUẢN LÝ HÓA ĐƠN / CÔNG NỢ TÍCH HỢP DASHBOARD DỮ LIỆU CHO TUYỂN DỤNG
 
-Hệ thống quản lý tài chính và công nợ B2B chuyên biệt cho doanh nghiệp dịch vụ tuyển dụng nhân sự cấp cao (Headhunt & Staffing Agency).
-
 ---
 
 ## 👥 THÀNH VIÊN DỰ ÁN (NHÓM 10)
@@ -42,6 +40,5 @@ npm test
 
 ---
 
-## 📋 QUẢN LÝ TIẾN ĐỘ & 160 TASK
-Chi tiết toàn bộ 160 task của dự án được liệt kê trong file:
-👉 **[DANH_SACH_TASK.md](DANH_SACH_TASK.md)**
+## 📋 QUẢN LÝ TIẾN ĐỘ & TASK: huynhnguyenvinhphuc
+
