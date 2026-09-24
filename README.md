@@ -3,8 +3,11 @@
 ---
 
 ## 👥 THÀNH VIÊN DỰ ÁN (NHÓM 10)
-- **Huỳnh Nguyễn Vĩnh Phúc** (`phuchh9999-sketch`) - Trưởng nhóm
-- **Phạm Sơn** (`phamson333zzz-sudo`) - Thành viên
+- **Huỳnh Nguyễn Vĩnh Phúc** (`phuchh9999-sketch`) 
+- **Phạm Sơn** (`phamson333zzz-sudo`) 
+- **Nguyễn Hoàng Phước** (`phuoc801901-glitch`)
+- **Nguyễn Hữu Phúc** (`nguyenhuuphuc22012005-rgb`)
+- **Nguyễn Xuân Đoàn** (`xuandoan755-del`) 
 
 ---
 
