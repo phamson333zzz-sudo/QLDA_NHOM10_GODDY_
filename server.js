@@ -26,3 +26,13 @@ app.use('/api/invoices', require('./routes/invoiceRoutes'));
 app.use('/api/debt', require('./routes/debtRoutes'));
 app.use('/api/dashboard', require('./routes/dashboardRoutes'));
 app.use('/api/audit', require('./routes/auditRoutes'));
+
+// Route trang chủ
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Middleware xử lý lỗi 404 cho API
+app.use('/api/*', (req, res) => {
+  res.status(404).json({ success: false, message: 'Đường dẫn API không tồn tại!' });
+});
