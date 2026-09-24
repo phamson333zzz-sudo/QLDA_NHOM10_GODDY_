@@ -1,10 +1,12 @@
 # QLDA_NHOM10_GODDY - PHẦN MỀM QUẢN LÝ HÓA ĐƠN / CÔNG NỢ TÍCH HỢP DASHBOARD DỮ LIỆU CHO TUYỂN DỤNG
 
+> Phần mềm giúp các công ty dịch vụ tuyển dụng nhân sự (Headhunt) tự động hóa quy trình chốt hợp đồng tuyển dụng (Deal) ➔ Xuất hóa đơn VAT ➔ Theo dõi và thu hồi công nợ B2B ➔ Phân tích tài chính qua biểu đồ Dashboard.
+
 ---
 
 ## 👥 THÀNH VIÊN DỰ ÁN (NHÓM 10)
 - **Huỳnh Nguyễn Vĩnh Phúc** (`phuchh9999-sketch`) 
-- **Phạm Sơn** (`phamson333zzz-sudo`) 
+- **Phạm Văn Sơn** (`phamson333zzz-sudo`) 
 - **Nguyễn Hoàng Phước** (`phuoc801901-glitch`)
 - **Nguyễn Hữu Phúc** (`nguyenhuuphuc22012005-rgb`)
 - **Nguyễn Xuân Đoàn** (`xuandoan755-del`) 
