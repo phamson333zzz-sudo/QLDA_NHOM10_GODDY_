@@ -56,3 +56,10 @@ async function startServer() {
     console.error('[Error] Không thể khởi động máy chủ:', err);
   }
 }
+
+// Khởi chạy nếu file được gọi trực tiếp
+if (require.main === module) {
+  startServer();
+}
+
+module.exports = app;
