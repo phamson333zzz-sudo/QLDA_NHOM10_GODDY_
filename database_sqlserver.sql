@@ -72,3 +72,26 @@ CREATE TABLE dbo.Candidates (
     updatedAt DATETIME2 DEFAULT GETDATE()
 );
 GO
+
+-- 5. BẢNG DEAL TUYỂN DỤNG ONBOARD (PLACEMENTS)
+IF OBJECT_ID('dbo.Placements', 'U') IS NOT NULL DROP TABLE dbo.Placements;
+CREATE TABLE dbo.Placements (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    jobId INT NOT NULL,
+    candidateId INT NOT NULL,
+    clientId INT NOT NULL,
+    recruiterId INT NOT NULL,
+    officialSalary DECIMAL(15,2) NOT NULL,
+    serviceFee DECIMAL(15,2) NOT NULL,
+    onboardDate DATE NOT NULL,
+    warrantyDays INT DEFAULT 60,
+    warrantyEndDate DATE NULL,
+    status NVARCHAR(50) DEFAULT 'UnderWarranty', -- 'UnderWarranty', 'Passed', 'Failed'
+    createdAt DATETIME2 DEFAULT GETDATE(),
+    updatedAt DATETIME2 DEFAULT GETDATE(),
+    CONSTRAINT FK_Placements_Jobs FOREIGN KEY (jobId) REFERENCES dbo.Jobs(id),
+    CONSTRAINT FK_Placements_Candidates FOREIGN KEY (candidateId) REFERENCES dbo.Candidates(id),
+    CONSTRAINT FK_Placements_Clients FOREIGN KEY (clientId) REFERENCES dbo.Clients(id),
+    CONSTRAINT FK_Placements_Users FOREIGN KEY (recruiterId) REFERENCES dbo.Users(id)
+);
+GO
