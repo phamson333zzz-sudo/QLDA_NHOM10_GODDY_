@@ -1,0 +1,316 @@
+<mxfile host="app.diagrams.net" agent="Antigravity">
+  <diagram id="ERD-GoddyRecruit" name="ERD_QLDA_NHOM10_GODDY">
+    <mxGraphModel dx="3003" dy="1910" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1300" background="#f8fafc" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title_banner" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cbd5e1;shadow=1;strokeWidth=2;align=center;" value="&lt;b style=&quot;font-size: 20px;&quot;&gt;SƠ ĐỒ THỰC THỂ QUAN HỆ (ERD) - DỰ ÁN QLDA NHÓM 10 (GODDY RECRUIT)&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 13px; color: #64748b;&quot;&gt;Hệ thống Quản lý Hóa đơn, Thu hồi Công nợ &amp;amp; Tuyển dụng Nhân sự B2B (8 Thực thể chuẩn)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="40" width="1040" x="60" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_users" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=32;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#0284c7;fontColor=#ffffff;rounded=1;shadow=1;strokeWidth=2;" value="&lt;b&gt;Users (Người dùng hệ thống)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="272" width="260" x="390" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_users_col_0" parent="tbl_users" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#dc2626;&quot;&gt;[PK]&lt;/b&gt; id &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="32" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_users_col_1" parent="tbl_users" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#059669;&quot;&gt;[UK]&lt;/b&gt; username &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(50)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="56" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_users_col_2" parent="tbl_users" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#059669;&quot;&gt;[UK]&lt;/b&gt; email &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(100)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_users_col_3" parent="tbl_users" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="password &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(255)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_users_col_4" parent="tbl_users" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="fullName &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(100)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_users_col_5" parent="tbl_users" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="role &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(20)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_users_col_6" parent="tbl_users" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="avatar &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(MAX)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_users_col_7" parent="tbl_users" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="isActive &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: BIT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_users_col_8" parent="tbl_users" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="createdAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="224" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_users_col_9" parent="tbl_users" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="updatedAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="248" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_audit" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=32;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#475569;strokeColor=#475569;fontColor=#ffffff;rounded=1;shadow=1;strokeWidth=2;" value="&lt;b&gt;AuditLogs (Nhật ký thao tác)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="200" width="260" x="80" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_audit_col_0" parent="tbl_audit" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#dc2626;&quot;&gt;[PK]&lt;/b&gt; id &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="32" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_audit_col_1" parent="tbl_audit" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#2563eb;&quot;&gt;[FK]&lt;/b&gt; userId &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="56" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_audit_col_2" parent="tbl_audit" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="action &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(100)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_audit_col_3" parent="tbl_audit" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="module &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(50)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_audit_col_4" parent="tbl_audit" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="details &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(MAX)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_audit_col_5" parent="tbl_audit" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="createdAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_audit_col_6" parent="tbl_audit" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="updatedAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_candidates" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=32;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#059669;strokeColor=#059669;fontColor=#ffffff;rounded=1;shadow=1;strokeWidth=2;" value="&lt;b&gt;Candidates (Ứng viên)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="224" width="260" x="1060" y="36" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_candidates_col_0" parent="tbl_candidates" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#dc2626;&quot;&gt;[PK]&lt;/b&gt; id &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="32" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_candidates_col_1" parent="tbl_candidates" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="fullName &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(100)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="56" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_candidates_col_2" parent="tbl_candidates" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#059669;&quot;&gt;[UK]&lt;/b&gt; email &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(100)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_candidates_col_3" parent="tbl_candidates" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="phone &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(20)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_candidates_col_4" parent="tbl_candidates" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="currentPosition &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(100)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_candidates_col_5" parent="tbl_candidates" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="status &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(50)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_candidates_col_6" parent="tbl_candidates" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="createdAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_candidates_col_7" parent="tbl_candidates" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="updatedAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_clients" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=32;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#2563eb;strokeColor=#2563eb;fontColor=#ffffff;rounded=1;shadow=1;strokeWidth=2;" value="&lt;b&gt;Clients (Khách hàng Doanh nghiệp)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="296" width="270" x="10" y="860" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_clients_col_0" parent="tbl_clients" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#dc2626;&quot;&gt;[PK]&lt;/b&gt; id &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="270" y="32" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_clients_col_1" parent="tbl_clients" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="companyName &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(200)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="270" y="56" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_clients_col_2" parent="tbl_clients" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#059669;&quot;&gt;[UK]&lt;/b&gt; taxCode &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(50)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="270" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_clients_col_3" parent="tbl_clients" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="address &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(255)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="270" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_clients_col_4" parent="tbl_clients" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="contactPerson &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(100)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="270" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_clients_col_5" parent="tbl_clients" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="contactEmail &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(100)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="270" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_clients_col_6" parent="tbl_clients" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="contactPhone &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(20)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="270" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_clients_col_7" parent="tbl_clients" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="paymentTermDays &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="270" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_clients_col_8" parent="tbl_clients" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="status &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(50)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="270" y="224" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_clients_col_9" parent="tbl_clients" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="createdAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="270" y="248" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_clients_col_10" parent="tbl_clients" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="updatedAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="270" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_jobs" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=32;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#7c3aed;strokeColor=#7c3aed;fontColor=#ffffff;rounded=1;shadow=1;strokeWidth=2;" value="&lt;b&gt;Jobs (Vị trí tuyển dụng)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="248" width="260" x="630" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_jobs_col_0" parent="tbl_jobs" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#dc2626;&quot;&gt;[PK]&lt;/b&gt; id &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="32" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_jobs_col_1" parent="tbl_jobs" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#2563eb;&quot;&gt;[FK]&lt;/b&gt; clientId &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="56" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_jobs_col_2" parent="tbl_jobs" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="title &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(150)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_jobs_col_3" parent="tbl_jobs" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="department &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(100)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_jobs_col_4" parent="tbl_jobs" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="salaryRange &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(100)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_jobs_col_5" parent="tbl_jobs" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="feeRatePercent &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: FLOAT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_jobs_col_6" parent="tbl_jobs" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="status &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(50)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_jobs_col_7" parent="tbl_jobs" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="createdAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_jobs_col_8" parent="tbl_jobs" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="updatedAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="260" y="224" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_placements" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=32;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#ea580c;strokeColor=#ea580c;fontColor=#ffffff;rounded=1;shadow=1;strokeWidth=2;" value="&lt;b&gt;Placements (Deal Onboard &amp; Bảo hành)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="344" width="280" x="1180" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_placements_col_0" parent="tbl_placements" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#dc2626;&quot;&gt;[PK]&lt;/b&gt; id &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="32" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_placements_col_1" parent="tbl_placements" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#2563eb;&quot;&gt;[FK]&lt;/b&gt; jobId &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="56" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_placements_col_2" parent="tbl_placements" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#2563eb;&quot;&gt;[FK]&lt;/b&gt; candidateId &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_placements_col_3" parent="tbl_placements" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#2563eb;&quot;&gt;[FK]&lt;/b&gt; clientId &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_placements_col_4" parent="tbl_placements" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#2563eb;&quot;&gt;[FK]&lt;/b&gt; recruiterId &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_placements_col_5" parent="tbl_placements" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="officialSalary &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DECIMAL(15,2)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_placements_col_6" parent="tbl_placements" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="serviceFee &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DECIMAL(15,2)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_placements_col_7" parent="tbl_placements" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="onboardDate &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATE&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_placements_col_8" parent="tbl_placements" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="warrantyDays &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="224" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_placements_col_9" parent="tbl_placements" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="warrantyEndDate &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATE&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="248" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_placements_col_10" parent="tbl_placements" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="status &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(50)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_placements_col_11" parent="tbl_placements" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="createdAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="296" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_placements_col_12" parent="tbl_placements" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="updatedAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=32;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dc2626;strokeColor=#dc2626;fontColor=#ffffff;rounded=1;shadow=1;strokeWidth=2;" value="&lt;b&gt;Invoices (Hóa đơn VAT &amp; Công nợ)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="392" width="280" x="535" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_0" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#dc2626;&quot;&gt;[PK]&lt;/b&gt; id &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="32" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_1" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#059669;&quot;&gt;[UK]&lt;/b&gt; invoiceCode &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(50)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="56" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_2" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#2563eb;&quot;&gt;[FK]&lt;/b&gt; clientId &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_3" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#2563eb;&quot;&gt;[FK]&lt;/b&gt; placementId &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_4" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="subtotal &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DECIMAL(15,2)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_5" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="vatRate &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: FLOAT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_6" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="vatAmount &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DECIMAL(15,2)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_7" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="totalAmount &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DECIMAL(15,2)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_8" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="paidAmount &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DECIMAL(15,2)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="224" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_9" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="remainingAmount &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DECIMAL(15,2)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="248" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_10" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="issueDate &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATE&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_11" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="dueDate &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATE&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="296" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_12" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="status &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(50)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_13" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="createdAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="344" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_invoices_col_14" parent="tbl_invoices" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="updatedAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="368" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_payments" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=32;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#16a34a;strokeColor=#16a34a;fontColor=#ffffff;rounded=1;shadow=1;strokeWidth=2;" value="&lt;b&gt;Payments (Lịch sử thanh toán thu nợ)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="248" width="280" x="940" y="1450" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_payments_col_0" parent="tbl_payments" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#dc2626;&quot;&gt;[PK]&lt;/b&gt; id &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="32" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_payments_col_1" parent="tbl_payments" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="&lt;b style=&quot;color:#2563eb;&quot;&gt;[FK]&lt;/b&gt; invoiceId &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: INT&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="56" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_payments_col_2" parent="tbl_payments" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="amount &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DECIMAL(15,2)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_payments_col_3" parent="tbl_payments" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="paymentDate &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATE&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_payments_col_4" parent="tbl_payments" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="paymentMethod &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(50)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_payments_col_5" parent="tbl_payments" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="referenceCode &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(100)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_payments_col_6" parent="tbl_payments" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="notes &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: NVARCHAR(MAX)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_payments_col_7" parent="tbl_payments" style="text;strokeColor=none;fillColor=#f1f5f9;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="createdAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_payments_col_8" parent="tbl_payments" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontColor=#0f172a;fontSize=12;" value="updatedAt &lt;span style=&quot;color:#64748b; font-size:11px;&quot;&gt;: DATETIME2&lt;/span&gt;" vertex="1">
+          <mxGeometry height="24" width="280" y="224" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_users_audit" edge="1" parent="1" source="tbl_users" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#334155;strokeWidth=2;fontSize=11;fontColor=#334155;fontStyle=1;labelBackgroundColor=#ffffff;" target="tbl_audit" value="1 - N (Thực hiện)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_users_placements" edge="1" parent="1" source="tbl_users" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#334155;strokeWidth=2;fontSize=11;fontColor=#334155;fontStyle=1;labelBackgroundColor=#ffffff;" target="tbl_placements" value="1 - N (Phụ trách Deal)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_clients_jobs" edge="1" parent="1" source="tbl_clients" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#334155;strokeWidth=2;fontSize=11;fontColor=#334155;fontStyle=1;labelBackgroundColor=#ffffff;" target="tbl_jobs" value="1 - N (Đặt hàng)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_clients_placements" edge="1" parent="1" source="tbl_clients" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#334155;strokeWidth=2;fontSize=11;fontColor=#334155;fontStyle=1;labelBackgroundColor=#ffffff;" target="tbl_placements" value="1 - N (Nhận nhân sự)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="330" y="610" />
+              <mxPoint x="575" y="610" />
+              <mxPoint x="575" y="562" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_clients_invoices" edge="1" parent="1" source="tbl_clients" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#334155;strokeWidth=2;fontSize=11;fontColor=#334155;fontStyle=1;labelBackgroundColor=#ffffff;" target="tbl_invoices" value="1 - N (Công nợ)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_jobs_placements" edge="1" parent="1" source="tbl_jobs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#334155;strokeWidth=2;fontSize=11;fontColor=#334155;fontStyle=1;labelBackgroundColor=#ffffff;" target="tbl_placements" value="1 - N (Khớp tuyển dụng)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_candidates_placements" edge="1" parent="1" source="tbl_candidates" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#334155;strokeWidth=2;fontSize=11;fontColor=#334155;fontStyle=1;labelBackgroundColor=#ffffff;" target="tbl_placements" value="1 - N (Onboard)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_placements_invoices" edge="1" parent="1" source="tbl_placements" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#334155;strokeWidth=2;fontSize=11;fontColor=#334155;fontStyle=1;labelBackgroundColor=#ffffff;" target="tbl_invoices" value="1 - 1 (Xuất hóa đơn)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_invoices_payments" edge="1" parent="1" source="tbl_invoices" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#334155;strokeWidth=2;fontSize=11;fontColor=#334155;fontStyle=1;labelBackgroundColor=#ffffff;" target="tbl_payments" value="1 - N (Thu hồi nợ)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
