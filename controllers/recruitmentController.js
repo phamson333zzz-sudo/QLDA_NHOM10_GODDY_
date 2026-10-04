@@ -1,6 +1,7 @@
 ﻿const { Job, Candidate, Placement, Client, User, Invoice, AuditLog } = require('../models');
 
 // =================== 1. QUẢN LÝ JOBS (VỊ TRÍ TUYỂN DỤNG) ===================
+
 exports.getJobs = async (req, res) => {
   try {
     const jobs = await Job.findAll({
