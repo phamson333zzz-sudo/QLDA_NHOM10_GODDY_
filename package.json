@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/phamson333zzz-sudo/QLDA_NHOM10_GODDY_#readme",
   "dependencies": {
+    "cors": "^2.8.6",
     "express": "^5.2.1",
     "pg": "^8.23.1",
     "pg-hstore": "^2.3.4",
