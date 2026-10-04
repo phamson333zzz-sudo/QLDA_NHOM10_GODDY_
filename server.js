@@ -14,6 +14,9 @@ app.use(express.json());
 // Parse URL-encoded data
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static assets
+app.use(express.static('public'));
+
 // Health check
 app.get('/', (req, res) => {
   res.json({
