@@ -1,5 +1,6 @@
 ﻿const express = require('express');
 const cors = require('cors');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -16,6 +17,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve static assets
 app.use(express.static('public'));
+
+// Auth routes
+app.use('/api/auth', authRoutes);
 
 // Health check
 app.get('/', (req, res) => {

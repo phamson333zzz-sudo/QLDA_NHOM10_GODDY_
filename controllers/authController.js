@@ -58,60 +58,132 @@ exports.login = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
 // Đăng ký tài khoản nhân viên mới
 exports.register = async (req, res) => {
-    try {
-        const { username, email, password, fullName, role } = req.body;
-        if (!username || !email || !password || !fullName) {
-            return res.status(400).json({ success: false, message: 'Vui lòng điền đầy đủ các thông tin đăng ký!' });
-        }
-
-        const existingUser = await User.findOne({ where: { username: username.trim() } });
-        if (existingUser) {
-            return res.status(400).json({ success: false, message: 'Tên tài khoản này đã được sử dụng!' });
-        }
-
-        const hashPassword = await bcrypt.hash(password, 10);
-        const newUser = await User.create({
-            username: username.trim(),
-            email: email.trim(),
-            password: hashPassword,
-            fullName: fullName.trim(),
-            role: role || 'recruiter',
-            isActive: true
-        });
-
-        await AuditLog.create({
-            userId: req.user ? req.user.id : null,
-            action: 'REGISTER_USER',
-            module: 'AUTH',
-            details: `Tạo mới tài khoản nhân viên: ${newUser.username} (${newUser.fullName}, vai trò: ${newUser.role})`
-        });
-
-        res.status(201).json({
-            success: true,
-            message: 'Đăng ký tài khoản thành công!',
-            user: {
-                id: newUser.id,
-                username: newUser.username,
-                fullName: newUser.fullName,
-                role: newUser.role,
-                email: newUser.email
-            }
-        });
-    } catch (err) {
-        res.status(500).json({ success: false, message: err.message });
+  try {
+    const { username, email, password, fullName, role } = req.body;
+    if (!username || !email || !password || !fullName) {
+      return res.status(400).json({ success: false, message: 'Vui lòng điền đầy đủ các thông tin đăng ký!' });
     }
+
+    const existingUser = await User.findOne({ where: { username: username.trim() } });
+    if (existingUser) {
+      return res.status(400).json({ success: false, message: 'Tên tài khoản này đã được sử dụng!' });
+    }
+
+    const hashPassword = await bcrypt.hash(password, 10);
+    const newUser = await User.create({
+      username: username.trim(),
+      email: email.trim(),
+      password: hashPassword,
+      fullName: fullName.trim(),
+      role: role || 'recruiter',
+      isActive: true
+    });
+
+    await AuditLog.create({
+      userId: req.user ? req.user.id : null,
+      action: 'REGISTER_USER',
+      module: 'AUTH',
+      details: `Tạo mới tài khoản nhân viên: ${newUser.username} (${newUser.fullName}, vai trò: ${newUser.role})`
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'Đăng ký tài khoản thành công!',
+      user: {
+        id: newUser.id,
+        username: newUser.username,
+        fullName: newUser.fullName,
+        role: newUser.role,
+        email: newUser.email
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
 };
+
 // Lấy danh sách người dùng trong hệ thống
 exports.getUsers = async (req, res) => {
-    try {
-        const users = await User.findAll({
-            attributes: { exclude: ['password'] },
-            order: [['id', 'ASC']]
-        });
-        res.json({ success: true, users });
-    } catch (err) {
-        res.status(500).json({ success: false, message: err.message });
-    }
+  try {
+    const users = await User.findAll({
+      attributes: { exclude: ['password'] },
+      order: [['id', 'ASC']]
+    });
+    res.json({ success: true, users });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
 };
+
+// Đổi mật khẩu cá nhân (TASK-213)
+exports.changePassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword, userId } = req.body;
+    const targetUserId = (req.user && req.user.id) || userId;
+
+    if (!targetUserId || !oldPassword || !newPassword) {
+      return res.status(400).json({ success: false, message: 'Vui lòng cung cấp đầy đủ mật khẩu cũ và mật khẩu mới!' });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ success: false, message: 'Mật khẩu mới phải có tối thiểu 6 ký tự!' });
+    }
+
+    const user = await User.findByPk(targetUserId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy tài khoản người dùng!' });
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ success: false, message: 'Mật khẩu cũ không chính xác!' });
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    await AuditLog.create({
+      userId: user.id,
+      action: 'CHANGE_PASSWORD',
+      module: 'AUTH',
+      details: `Người dùng ${user.username} (${user.fullName}) đã đổi mật khẩu thành công.`
+    });
+
+    res.json({ success: true, message: 'Đổi mật khẩu thành công!' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// Khóa / Mở khóa tài khoản người dùng (TASK-214)
+exports.toggleUserActive = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByPk(id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy tài khoản người dùng!' });
+    }
+
+    user.isActive = !user.isActive;
+    await user.save();
+
+    const actionText = user.isActive ? 'Mở khóa' : 'Khóa';
+    await AuditLog.create({
+      userId: req.user ? req.user.id : null,
+      action: 'TOGGLE_USER_STATUS',
+      module: 'AUTH',
+      details: `${actionText} tài khoản người dùng: ${user.username} (${user.fullName})`
+    });
+
+    res.json({
+      success: true,
+      message: `${actionText} tài khoản thành công!`,
+      isActive: user.isActive
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
