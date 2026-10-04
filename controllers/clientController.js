@@ -15,6 +15,7 @@ exports.getClients = async (req, res) => {
       ];
     }
 
+
     if (status && status !== 'All') {
       where.status = status;
     }
