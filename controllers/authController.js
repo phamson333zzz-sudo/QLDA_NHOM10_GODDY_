@@ -11,6 +11,8 @@ exports.login = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Vui lòng nhập tên tài khoản và mật khẩu!' });
     }
 
+
+
     const user = await User.findOne({
       where: {
         [Op.or]: [
@@ -186,4 +188,4 @@ exports.toggleUserActive = async (req, res) => {
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
-};
+};
