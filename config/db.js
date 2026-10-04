@@ -18,7 +18,7 @@ if (dbDialect === 'mssql') {
       dialectOptions: {
         instanceName: process.env.DB_INSTANCE || undefined,
         options: {
-          encrypt: process.env.DB_ENCRYPT === 'true',
+          encrypt: process.env.DB_ENCRYPT === 'true'
           trustServerCertificate: true,
           enableArithAbort: true
         }
