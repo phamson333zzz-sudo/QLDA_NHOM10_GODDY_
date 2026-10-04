@@ -20,6 +20,7 @@ exports.createJob = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Vui lòng chọn khách hàng và nhập tên vị trí!' });
         }
 
+
         const job = await Job.create({
             clientId,
             title: title.trim(),
